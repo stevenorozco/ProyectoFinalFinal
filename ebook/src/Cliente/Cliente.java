@@ -1,0 +1,163 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Cliente;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import Modelo.*;
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author Luis
+ */
+public class Cliente extends Thread{
+    Socket conexion;
+    ObjectOutputStream objectOutput;
+    ObjectInputStream objectInput;
+    public Cliente(){}
+    
+    @Override
+    public void run(){
+        conectarServidor();
+        crearFlujos();
+        
+    }
+    
+    public void conectarServidor(){
+        
+        try {
+            System.out.println("Inicializando cliente...");
+            conexion = new Socket("localhost", 1144);
+            System.out.println("Cliente inicializado y conectado");
+        } catch (IOException ex) {
+            System.out.println("IOException in conectarServidor method, class Cliente");
+        }
+        
+    }
+    
+    public void crearFlujos(){
+        try {
+            System.out.println("Creando flujos...");
+            objectOutput = new ObjectOutputStream(conexion.getOutputStream());
+            objectInput = new ObjectInputStream(conexion.getInputStream());
+            System.out.println("Flujos creados");
+        } catch (IOException ex) {
+            System.out.println("IOException in crearFlujos method, class Cliente");
+        }
+    }
+    
+    public String cerrarConexion(){
+        String msg = "";
+        try {
+            System.out.println("Cerrando conexion...");
+            objectInput.close();
+            objectOutput.close();
+            conexion.close();
+            msg = "Conexion cerrada";
+        } catch (IOException ex) {
+            msg = "Error al cerrar la conexion";
+        }
+        
+        return msg;
+    }
+    
+    public String agregarLibro(String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen,
+            double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido){
+        String mensaje="";
+        try {
+            Libro libro = new Libro(isbn, numeroPaginas, titulo, resumen, autor, imagen, precio, categoria, bestSeller,
+            edadMinima, calificacion, contenido);
+            ArrayList msg = new ArrayList();
+            msg.add("agregarLibro");
+            msg.add(libro);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            ArrayList resp = (ArrayList)objectInput.readObject();
+            mensaje = "Recibido del servidor: " + (String)resp.get(0);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return mensaje;
+    }
+    
+    public String eliminarLibro(String isbn){
+        String mensaje="";
+        try{
+           ArrayList msg = new ArrayList();
+           msg.add("eliminarLibro");
+           msg.add(isbn);
+           objectOutput.writeObject(msg);
+           objectOutput.flush();
+           ArrayList resp = (ArrayList)objectInput.readObject();
+           mensaje = "Recibido del servidor: " + (String)resp.get(0);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        return mensaje;
+    }
+    
+    public ArrayList consultarLibro(String isbn){
+        ArrayList resp=null;
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("consultarLibro");
+            msg.add(isbn);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+           
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+         return resp;
+    }
+    
+    public void editarLibro(String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen,
+            double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido){
+        this.agregarLibro(isbn, numeroPaginas, titulo, resumen, autor, imagen, precio, categoria, bestSeller, edadMinima, calificacion, contenido);
+        
+    }
+    
+    public ArrayList seleccionarTexto(String path){
+        ArrayList text = new ArrayList();
+        String linea;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            while((linea = br.readLine()) != null){
+                text.add(linea);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return text;
+    }
+    
+    public ImageIcon seleccionarPortada(String path){
+        ImageIcon imagen = new ImageIcon(path);
+        
+        return imagen;
+    }
+            
+}
