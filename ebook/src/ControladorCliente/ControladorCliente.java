@@ -6,12 +6,7 @@
 package ControladorCliente;
 import Cliente.Cliente;
 import Modelo.Libro;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -79,25 +74,38 @@ public class ControladorCliente {
        }
     }
     
-    public void editarLibro(){
-        
+    public String editarLibro(String isbn, String titulo, String resumen, String autor, ImageIcon portada, double precio,
+            String categoria, boolean bestSeller, int edadMinima, int calificacion){
+        return cliente.editarLibro(isbn, titulo, resumen, autor, portada, precio, categoria, bestSeller, edadMinima, calificacion);
     }
     
     public ArrayList seleccionarTexto(String path){
         ArrayList texto = cliente.seleccionarTexto(path);
         String contenido="";
+        int contador=0;
         for(int i = 0; i < texto.size(); i++){
             if(i%20==0){
                 contenido+="\n";
+                contador+=1;
             }else{
                 contenido+=(String)texto.get(i)+"\n";
             }
         }
         ArrayList retorno = new ArrayList();
         retorno.add(contenido);
-        retorno.add(texto.size());
+        retorno.add(contador);
         
         return retorno;
+    }
+    
+    public ArrayList buscarPorCategoria(String categoria){
+       ArrayList libros = cliente.buscarPorCategoria(categoria);
+       ArrayList titulos=null;  
+       for(int i=0; i < libros.size(); i++){
+           Libro libro = (Libro)libros.get(i);
+           titulos.add(libro.getTitulo());
+       }
+       return titulos;
     }
     
     public ImageIcon seleccionarPortada(String path){

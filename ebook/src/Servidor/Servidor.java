@@ -8,14 +8,12 @@ package Servidor;
 import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
-import Modelo.*;
 import Hilo.Hilo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,11 +37,16 @@ public class Servidor extends Thread{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        try {
+            leerBiblioteca();
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se encontro un archivo de biblioteca");
+            guardarBiblioteca();
+        }
     }
     
     @Override
     public void run(){
-        leerBiblioteca();
         try{
             while(true){
                 System.out.println("Servidor creado\nEsperando Conexion");
@@ -51,23 +54,16 @@ public class Servidor extends Thread{
                 System.out.println("Conexion recibida de: " + conexion.getInetAddress());
                 Hilo hiloCliente = new Hilo(conexion, biblioteca);
                 hiloCliente.start();
-                guardarBiblioteca();
+                
             }
         }catch(IOException ioe){
             System.out.println("Error en la inicializacion del servidor");
         }
     }
     
-    public void guardarBiblioteca(){
+     public void guardarBiblioteca(){
         ObjectOutputStream escritor;
         try {
-            Iterator it = biblioteca.values().iterator();
-            while(it.hasNext()){
-                Libro libro = (Libro)it.next();
-                String isbn = libro.getIsbn()+".txt";
-                escritor = new ObjectOutputStream(new FileOutputStream(isbn, false));
-                escritor.close();
-            }
             escritor = new ObjectOutputStream(new FileOutputStream("biblioteca.txt", false));
             escritor.writeObject(this.biblioteca);
             escritor.flush();
@@ -78,17 +74,15 @@ public class Servidor extends Thread{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-       
-    }
+     }
     
-    public void leerBiblioteca(){
+    public void leerBiblioteca() throws FileNotFoundException{
+        System.out.println("Biblioteca leida");
         ObjectInputStream lector;
         try {
             lector = new ObjectInputStream(new FileInputStream("biblioteca.txt"));
             HashMap biblioteca = (HashMap)lector.readObject();
             this.biblioteca = biblioteca;
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {

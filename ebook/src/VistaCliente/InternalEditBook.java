@@ -22,6 +22,7 @@ public class InternalEditBook extends javax.swing.JInternalFrame {
     public InternalEditBook(ControladorCliente cc) {
         this.cc = cc;
         initComponents();
+        this.buttonEditar.setEnabled(false);
     }
 
     /**
@@ -182,7 +183,7 @@ public class InternalEditBook extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -212,17 +213,14 @@ public class InternalEditBook extends javax.swing.JInternalFrame {
                     .addComponent(fieldEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                    .addComponent(jLabel9)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(buttonPortada))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonEditar)
-                .addContainerGap())
+                .addComponent(buttonEditar))
         );
 
         pack();
@@ -238,7 +236,23 @@ public class InternalEditBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonPortadaActionPerformed
 
     private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
-        // TODO add your handling code here:
+        String isbn = this.fieldIsbn.getText();
+        String titulo = this.fieldTitulo.getText();
+        String resumen = this.paneResumen.getText();
+        String autor = this.fieldAutor.getText();
+        double precio = Double.parseDouble(this.fieldPrecio.getText());
+        String categoria = (String)this.comboCategoria.getSelectedItem();
+        boolean bestSeller = this.checkBestSeller.isSelected();
+        int edadMinima = Integer.parseInt(this.fieldEdad.getText());
+        int calificacion = Integer.parseInt((String)this.comboCalificacion.getSelectedItem());
+        
+       String mensaje = cc.editarLibro(isbn, titulo, resumen, autor, portada, precio, categoria, bestSeller, edadMinima, calificacion);
+       JOptionPane.showMessageDialog(this, mensaje);
+        
+        
+        //String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen, double precio,
+                //String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido
+        
     }//GEN-LAST:event_buttonEditarActionPerformed
 
     private void buttonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCargarActionPerformed
@@ -246,11 +260,12 @@ public class InternalEditBook extends javax.swing.JInternalFrame {
         if(datos.length == 1){
             JOptionPane.showMessageDialog(this, datos[0], "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }else{
-        this.fieldTitulo.setText(datos[0]);
-        this.fieldAutor.setText(datos[1]);
-        this.fieldPrecio.setText(datos[2]);
-        this.fieldEdad.setText(datos[3]);
-        this.paneResumen.setText(datos[4]);
+            this.buttonEditar.setEnabled(true);
+            this.fieldTitulo.setText(datos[0]);
+            this.fieldAutor.setText(datos[1]);
+            this.fieldPrecio.setText(datos[2]);
+            this.fieldEdad.setText(datos[3]);
+            this.paneResumen.setText(datos[4]);
         }
     }//GEN-LAST:event_buttonCargarActionPerformed
 

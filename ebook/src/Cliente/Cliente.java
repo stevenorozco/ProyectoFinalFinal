@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import Modelo.*;
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -132,10 +131,51 @@ public class Cliente extends Thread{
          return resp;
     }
     
-    public void editarLibro(String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen,
-            double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido){
-        this.agregarLibro(isbn, numeroPaginas, titulo, resumen, autor, imagen, precio, categoria, bestSeller, edadMinima, calificacion, contenido);
-        
+    public String editarLibro(String isbn, String titulo, String resumen, String autor, ImageIcon portada,
+            double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion){
+        String mensaje="";
+        try {
+            ArrayList datos = new ArrayList();
+            datos.add("editarLibro");
+            datos.add(isbn);
+            datos.add(titulo);
+            datos.add(resumen);
+            datos.add(autor);
+            datos.add(portada);
+            datos.add(precio);
+            datos.add(categoria);
+            datos.add(bestSeller);
+            datos.add(edadMinima);
+            datos.add(calificacion);
+            
+            objectOutput.writeObject(datos);
+            objectOutput.flush();
+            ArrayList resp = (ArrayList)objectInput.readObject();
+            mensaje = (String)resp.get(0);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return mensaje;
+    }
+    
+    public ArrayList buscarPorCategoria(String categoria){
+        ArrayList libros=null;
+        try {
+            ArrayList msg = new ArrayList();
+            msg.add("consultarCategoria");
+            msg.add(categoria);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            libros = (ArrayList)objectInput.readObject();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return libros;
     }
     
     public ArrayList seleccionarTexto(String path){

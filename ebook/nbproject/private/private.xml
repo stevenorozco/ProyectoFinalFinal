@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/VistaCliente/InternalAddBook.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/VistaCliente/InternalDeleteBook.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/Modelo/Libro.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/Cliente/Cliente.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/ControladorServidor/ControladorServidor.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/Servidor/Servidor.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/VistaCliente/InternalFindBook.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/ControladorCliente/ControladorCliente.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/VistaServidor/VistaServidor.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/VistaCliente/VistaCliente.java</file>
-            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/ProyectoFinal/ebook/src/Hilo/Hilo.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/Cliente/Cliente.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/ControladorCliente/ControladorCliente.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/VistaCliente/InternalFindCategory.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/Modelo/Libro.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/Servidor/Servidor.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/VistaCliente/InternalEditBook.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/Hilo/Hilo.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/Taller_3/Taller3/ebook/src/VistaCliente/VistaCliente.java</file>
         </group>
     </open-files>
 </project-private>
