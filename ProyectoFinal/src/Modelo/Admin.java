@@ -9,7 +9,7 @@ package Modelo;
  *
  * @author invitado
  */
-public class UserAdmin {
+public class Admin {
     private String nombre;
     private String apellidos;
     private String cargo;
@@ -17,7 +17,7 @@ public class UserAdmin {
     private String correo;
     private boolean autorizado;
 
-    public UserAdmin(String nombre, String apellidos, String cargo, String celular, String correo, boolean autorizado) {
+    public Admin(String nombre, String apellidos, String cargo, String celular, String correo, boolean autorizado) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.cargo = cargo;

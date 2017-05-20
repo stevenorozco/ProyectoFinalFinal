@@ -91,7 +91,7 @@ public class Hilo extends Thread {
     public void iniciarSesion(String correo, String pass) {
         if (this.admins.containsKey(pass)) {
             System.out.println("Encontrado pass admin");
-            UserAdmin admin = (UserAdmin) admins.get(pass);
+            Admin admin = (Admin) admins.get(pass);
             if (admin.getCorreo() == correo) {
                 try {
                     ArrayList resp = new ArrayList();
@@ -110,7 +110,7 @@ public class Hilo extends Thread {
                 }
             }
         } else if (this.usuarios.containsKey(pass)) {
-            UserReader lector = (UserReader) this.usuarios.get(pass);
+            Lector lector = (Lector) this.usuarios.get(pass);
             if (lector.getCorreo() == correo) {
                 try {
                     ArrayList resp = new ArrayList();

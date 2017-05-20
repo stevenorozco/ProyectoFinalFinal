@@ -215,9 +215,20 @@ public class Cliente extends Thread{
         return imagen;
     }
     //----------------------------------------------GESTION DE USUARIOS LECTORES-----------------------------------------------// 
-    public void agregarUsuarioLector(){
-
-}
+    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, int edad, double saldo){
+        ArrayList resp = new ArrayList();
+        try {
+            Lector lector = new Lector(nombre, apellidos, celular, fechaNacimiento, correo, edad, saldo);
+            ArrayList msg = new ArrayList();
+            msg.add("agregarLector");
+            msg.add(lector);
+            objectOutput.writeObject(msg);
+            resp = (ArrayList)objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
 }
 
 

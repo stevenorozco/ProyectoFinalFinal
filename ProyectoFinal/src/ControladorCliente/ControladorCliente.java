@@ -120,4 +120,10 @@ public class ControladorCliente {
     public String iniciarSesion(String user, String pass){
         return cliente.iniciarSesion(user, pass);
     }
+    
+    //-------------------------------------GESTION DE LECTORES-------------------------------------------------------------------
+    
+    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, int edad, double saldo){
+        return cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, edad, saldo);
+    }
 }

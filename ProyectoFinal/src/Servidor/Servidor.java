@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
 import Hilo.Hilo;
-import Modelo.UserAdmin;
+import Modelo.Admin;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,7 +35,7 @@ public class Servidor extends Thread{
         this.admins = new HashMap();
         this.usuarios = new HashMap();
         if(admins.isEmpty()){
-            UserAdmin admin = new UserAdmin("Luis", "Restrepo", "Admin principal", "3192518747", "luisrestrepo1995@gmail.com", true);
+            Admin admin = new Admin("Luis", "Restrepo", "Admin principal", "3192518747", "luisrestrepo1995@gmail.com", true);
             admins.put("admin", admin);
             
         }

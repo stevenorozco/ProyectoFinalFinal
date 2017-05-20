@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author invitado
  */
-public class PeriodoOferta {
+public class PeriodoOferta extends Thread{
     private Date fechaInicial;
     private Date fechaFinal;
     private int porcentajeDescuento;

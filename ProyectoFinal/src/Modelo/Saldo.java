@@ -10,7 +10,7 @@ import java.util.*;
  * @author invitado
  */
 public class Saldo {
-    private int consecutivo;
+    private double consecutivo;
     private Date fecha;
     private String hora;
     private int valor;
@@ -23,7 +23,7 @@ public class Saldo {
     }
     
     //--------METODOS GET---------
-    public int getConsecutivo() {
+    public double getConsecutivo() {
         return consecutivo;
     }
 
@@ -40,7 +40,7 @@ public class Saldo {
     }
     
     //-------------METODOS SET-------------------
-    public void setConsecutivo(int consecutivo) {
+    public void setConsecutivo(double consecutivo) {
         this.consecutivo = consecutivo;
     }
 
