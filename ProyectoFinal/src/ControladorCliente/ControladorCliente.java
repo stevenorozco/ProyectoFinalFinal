@@ -117,13 +117,13 @@ public class ControladorCliente {
         return cliente.cerrarConexion();
     }
     
-    public String iniciarSesion(String user, String pass){
-        return cliente.iniciarSesion(user, pass);
+    public ArrayList iniciarSesionAdmin(String user, String pass){
+        return cliente.iniciarSesionAdmin(user, pass);
     }
     
     //-------------------------------------GESTION DE LECTORES-------------------------------------------------------------------
     
-    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, int edad, double saldo){
-        return cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, edad, saldo);
+    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, int edad, double saldo){
+        return cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, password, edad, saldo);
     }
 }

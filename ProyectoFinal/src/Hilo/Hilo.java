@@ -31,21 +31,21 @@ public class Hilo extends Thread {
     private HashMap admins;
     private ObjectInputStream objectInput;
     private ObjectOutputStream objectOutput;
-    
+
     public Hilo(Socket conexion, HashMap biblioteca, HashMap admins, HashMap usuarios) {
         this.conexion = conexion;
         this.biblioteca = biblioteca;
         this.usuarios = usuarios;
         this.admins = admins;
-        
+
         try {
             objectInput = new ObjectInputStream(conexion.getInputStream());
             objectOutput = new ObjectOutputStream(conexion.getOutputStream());
         } catch (IOException ex) {
             ex.printStackTrace();
-        }        
+        }
     }
-    
+
     @Override
     public synchronized void run() {
         try {
@@ -54,10 +54,10 @@ public class Hilo extends Thread {
                 ArrayList msg = (ArrayList) objectInput.readObject();
                 switch ((String) msg.get(0)) {
                     case "login":
-                        iniciarSesion((String) msg.get(1), (String) msg.get(2));
+                        iniciarSesionAdmin((String) msg.get(1), (String) msg.get(2));
                         break;
                     case "agregarLibro":
-                        agregarLibro((Libro) msg.get(1));                        
+                        agregarLibro((Libro) msg.get(1));
                         guardarBiblioteca();
                         break;
                     case "consultarLibro":
@@ -79,23 +79,26 @@ public class Hilo extends Thread {
                         break;
                 }
             }
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
-    public void iniciarSesion(String correo, String pass) {
-        if (this.admins.containsKey(pass)) {
-            System.out.println("Encontrado pass admin");
-            Admin admin = (Admin) admins.get(pass);
-            if (admin.getCorreo() == correo) {
+
+    public void iniciarSesionAdmin(String correo, String pass) {
+        if (biblioteca.containsKey(correo)) {
+            System.out.println("Encontro el correo");
+            Admin admin = (Admin) biblioteca.get(correo);
+            if (admin.getPassword() == pass) {
                 try {
                     ArrayList resp = new ArrayList();
-                    resp.add("admin");
+                    resp.add(true);
+                    resp.add(correo);
+                    resp.add(admin.getNombre());
+                    resp.add(admin.getApellidos());
                     objectOutput.writeObject(resp);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -103,26 +106,8 @@ public class Hilo extends Thread {
             } else {
                 try {
                     ArrayList resp = new ArrayList();
-                    resp.add("Correo o contraseña incorrecta");
-                    objectOutput.writeObject(resp);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        } else if (this.usuarios.containsKey(pass)) {
-            Lector lector = (Lector) this.usuarios.get(pass);
-            if (lector.getCorreo() == correo) {
-                try {
-                    ArrayList resp = new ArrayList();
-                    resp.add("lector");
-                    objectOutput.writeObject(resp);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            } else {
-                try {
-                    ArrayList resp = new ArrayList();
-                    resp.add("Correo o contraseña incorrecta");
+                    resp.add(false);
+                    resp.add("Contraseña incorrecta");
                     objectOutput.writeObject(resp);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -131,7 +116,8 @@ public class Hilo extends Thread {
         } else {
             try {
                 ArrayList resp = new ArrayList();
-                resp.add("No se encontro un usuario con el correo ingresado");
+                resp.add(false);
+                resp.add("Correo incorrecto");
                 objectOutput.writeObject(resp);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -183,7 +169,7 @@ public class Hilo extends Thread {
                 ex.printStackTrace();
             }
         }
-        
+
     }
 
     public void consultarLibro(String isbn) {
@@ -209,11 +195,11 @@ public class Hilo extends Thread {
             }
         }
     }
-    
+
     public void editarLibro(ArrayList msg) {
         /*String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen, double precio,
                 String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido*/
-        
+
         String isbn = (String) msg.get(1);
         System.out.println(isbn);
         Libro libro = (Libro) biblioteca.get(isbn);
@@ -237,7 +223,7 @@ public class Hilo extends Thread {
         System.out.println(edadMinima);
         int calificacion = ((int) msg.get(10));
         System.out.println(calificacion);
-        
+
         if (biblioteca.containsKey(isbn) == true) {
             biblioteca.remove(isbn);
             Libro l = new Libro(isbn, numeroPaginas, titulo, resumen, autor, portada, precio, categoria, bestSeller, edadMinima, calificacion, contenido);
@@ -260,9 +246,9 @@ public class Hilo extends Thread {
                 ex.printStackTrace();
             }
         }
-        
+
     }
-    
+
     public void consultarCategoria(String categoria) {
         /*
         Romance
@@ -274,7 +260,7 @@ public class Hilo extends Thread {
         Estadistica
         Programacion
          */
-        
+
         if (categoria == "Todos") {
             try {
                 Iterator it = this.biblioteca.values().iterator();
@@ -410,7 +396,7 @@ public class Hilo extends Thread {
             }
         }
     }
-    
+
     public void guardarBiblioteca() {
         ObjectOutputStream escritor;
         try {
@@ -424,6 +410,6 @@ public class Hilo extends Thread {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 }

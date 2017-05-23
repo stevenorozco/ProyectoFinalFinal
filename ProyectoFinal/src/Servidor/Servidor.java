@@ -35,8 +35,8 @@ public class Servidor extends Thread{
         this.admins = new HashMap();
         this.usuarios = new HashMap();
         if(admins.isEmpty()){
-            Admin admin = new Admin("Luis", "Restrepo", "Admin principal", "3192518747", "luisrestrepo1995@gmail.com", true);
-            admins.put("admin", admin);
+            Admin admin = new Admin("Luis", "Restrepo", "Admin principal", "3192518747", "luisrestrepo1995@gmail.com", "123", true);
+            admins.put(admin.getCorreo(), admin);
             
         }
         try {

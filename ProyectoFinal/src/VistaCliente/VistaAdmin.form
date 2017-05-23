@@ -182,7 +182,7 @@
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Icons/searchReaderButton.png"/>
+                  <Image iconType="3" name="/Icons/findReaderButton.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Consultar"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -306,10 +306,10 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="buttonFindAdmin">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Icons/searchAdminButton.png"/>
+                  <Image iconType="3" name="/Icons/findAdminButton.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Consultar"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -321,7 +321,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton6">
+            <Component class="javax.swing.JButton" name="buttonEditAdmin">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icons/editAdminButton.png"/>

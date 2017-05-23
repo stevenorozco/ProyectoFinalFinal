@@ -4,18 +4,52 @@
  * and open the template in the editor.
  */
 package VistaCliente;
+
 import ControladorCliente.ControladorCliente;
+import java.util.ArrayList;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Luis
  */
 public class VistaAdmin extends javax.swing.JFrame {
+
+    private String usuario;
     private ControladorCliente cc;
+
     /**
      * Creates new form VistaAdmin
      */
     public VistaAdmin() {
         initComponents();
+        cc = new ControladorCliente();
+        cc.ejecutarCliente();
+//        JTextField correo = new JTextField();
+//        JPasswordField password = new JPasswordField();
+//        JComponent[] entradas = {
+//            new JLabel("Correo"),
+//            correo,
+//            new JLabel("Contraseña"),
+//            password
+//        };
+//        ArrayList resp = null;
+//        do {
+//            int resultado = JOptionPane.showConfirmDialog(this, entradas, "LOGIN", JOptionPane.PLAIN_MESSAGE);
+//            if(resultado == JOptionPane.CLOSED_OPTION){
+//                System.exit(0);
+//            }
+//            if (resultado == JOptionPane.OK_OPTION) {
+//                String usuario = correo.getText();
+//                String pass = new String(password.getPassword());
+//                resp = cc.iniciarSesionAdmin(usuario, pass);
+//                System.out.println(resp.get(0));
+//            }
+//        } while ((boolean) resp.get(0) == false);
     }
 
     /**
@@ -45,8 +79,8 @@ public class VistaAdmin extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         buttonAddAdmin = new javax.swing.JButton();
         buttonDeleteAdmin = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        buttonFindAdmin = new javax.swing.JButton();
+        buttonEditAdmin = new javax.swing.JButton();
         desktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -150,7 +184,7 @@ public class VistaAdmin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(6, 18, 8, 0);
         jPanel2.add(jButton2, gridBagConstraints);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/searchReaderButton.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/findReaderButton.png"))); // NOI18N
         jButton3.setText("Consultar");
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -240,27 +274,27 @@ public class VistaAdmin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(6, 18, 8, 0);
         jPanel5.add(buttonDeleteAdmin, gridBagConstraints);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/searchAdminButton.png"))); // NOI18N
-        jButton5.setText("Consultar");
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonFindAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/findAdminButton.png"))); // NOI18N
+        buttonFindAdmin.setText("Consultar");
+        buttonFindAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonFindAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 18, 8, 0);
-        jPanel5.add(jButton5, gridBagConstraints);
+        jPanel5.add(buttonFindAdmin, gridBagConstraints);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/editAdminButton.png"))); // NOI18N
-        jButton6.setText("Editar");
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonEditAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/editAdminButton.png"))); // NOI18N
+        buttonEditAdmin.setText("Editar");
+        buttonEditAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonEditAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 18, 8, 65);
-        jPanel5.add(jButton6, gridBagConstraints);
+        jPanel5.add(buttonEditAdmin, gridBagConstraints);
 
         jTabbedPane1.addTab("Usuarios administradores", jPanel5);
 
@@ -375,15 +409,15 @@ public class VistaAdmin extends javax.swing.JFrame {
     private javax.swing.JButton buttonAddBook;
     private javax.swing.JButton buttonDeleteAdmin;
     private javax.swing.JButton buttonDeleteBook;
+    private javax.swing.JButton buttonEditAdmin;
     private javax.swing.JButton buttonEditBook;
+    private javax.swing.JButton buttonFindAdmin;
     private javax.swing.JButton buttonFindBook;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -35,16 +35,15 @@ public class Cliente extends Thread{
         
     }
     //-----------------------------------CONEXION CON EL SERVIDOR------------------------------------------
-    public String iniciarSesion(String user, String pass){
-        String msg="";
+    public ArrayList iniciarSesionAdmin(String user, String pass){
+        ArrayList msg = null;
         try {
             ArrayList login = new ArrayList();
             login.add("login");
             login.add(user);
             login.add(pass);
             objectOutput.writeObject(login);
-            ArrayList resp = (ArrayList) objectInput.readObject();
-            msg = (String)resp.get(0);
+            msg = (ArrayList) objectInput.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -215,10 +214,10 @@ public class Cliente extends Thread{
         return imagen;
     }
     //----------------------------------------------GESTION DE USUARIOS LECTORES-----------------------------------------------// 
-    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, int edad, double saldo){
+    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, int edad, double saldo){
         ArrayList resp = new ArrayList();
         try {
-            Lector lector = new Lector(nombre, apellidos, celular, fechaNacimiento, correo, edad, saldo);
+            Lector lector = new Lector(nombre, apellidos, celular, fechaNacimiento, correo, password, edad, saldo);
             ArrayList msg = new ArrayList();
             msg.add("agregarLector");
             msg.add(lector);
