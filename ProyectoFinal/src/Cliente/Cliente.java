@@ -43,6 +43,7 @@ public class Cliente extends Thread{
             login.add(user);
             login.add(pass);
             objectOutput.writeObject(login);
+            objectOutput.flush();
             msg = (ArrayList) objectInput.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -222,10 +223,43 @@ public class Cliente extends Thread{
             msg.add("agregarLector");
             msg.add(lector);
             objectOutput.writeObject(msg);
+            objectOutput.flush();
             resp = (ArrayList)objectInput.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
+        return resp;
+    }
+    //-------------------------------------------GESTION DE USUARIOS ADMINISTRADORES-------------------------------------------------
+    public ArrayList agregarAdmin(String nombre, String apellidos, String cargo, String celular, String email, String password, boolean autorizacion){
+        ArrayList resp=null;
+        try {
+            Admin admin = new Admin(nombre, apellidos, cargo, celular, email, password, autorizacion);
+            ArrayList msg = new ArrayList();
+            msg.add("agregarAdmin");
+            msg.add(admin);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
+    public ArrayList eliminarAdmin(String correo){
+        ArrayList resp = null;
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("eliminarAdmin");
+            msg.add(correo);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList) objectInput.readObject();            
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
         return resp;
     }
 }

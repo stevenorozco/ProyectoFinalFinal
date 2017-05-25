@@ -29,27 +29,27 @@ public class VistaAdmin extends javax.swing.JFrame {
         initComponents();
         cc = new ControladorCliente();
         cc.ejecutarCliente();
-//        JTextField correo = new JTextField();
-//        JPasswordField password = new JPasswordField();
-//        JComponent[] entradas = {
-//            new JLabel("Correo"),
-//            correo,
-//            new JLabel("Contraseña"),
-//            password
-//        };
-//        ArrayList resp = null;
-//        do {
-//            int resultado = JOptionPane.showConfirmDialog(this, entradas, "LOGIN", JOptionPane.PLAIN_MESSAGE);
-//            if(resultado == JOptionPane.CLOSED_OPTION){
-//                System.exit(0);
-//            }
-//            if (resultado == JOptionPane.OK_OPTION) {
-//                String usuario = correo.getText();
-//                String pass = new String(password.getPassword());
-//                resp = cc.iniciarSesionAdmin(usuario, pass);
-//                System.out.println(resp.get(0));
-//            }
-//        } while ((boolean) resp.get(0) == false);
+        JTextField correo = new JTextField();
+        JPasswordField password = new JPasswordField();
+        JComponent[] entradas = {
+            new JLabel("Correo"),
+            correo,
+            new JLabel("Contraseña"),
+            password
+        };
+        ArrayList resp = null;
+        do {
+            int resultado = JOptionPane.showConfirmDialog(this, entradas, "LOGIN", JOptionPane.PLAIN_MESSAGE);
+            if(resultado == JOptionPane.CLOSED_OPTION){
+                System.exit(0);
+            }
+            if (resultado == JOptionPane.OK_OPTION) {
+                String usuario = correo.getText();
+                String pass = new String(password.getPassword());
+                resp = cc.iniciarSesionAdmin(usuario, pass);
+                System.out.println(resp.get(0));
+            }
+        } while ((boolean) resp.get(0) == false);
     }
 
     /**
@@ -362,7 +362,9 @@ public class VistaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void buttonAddAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddAdminActionPerformed
-        // TODO add your handling code here:
+        InternalAddAdmin add = new InternalAddAdmin(cc);
+        this.desktopPane.add(add);
+        add.setVisible(true);
     }//GEN-LAST:event_buttonAddAdminActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

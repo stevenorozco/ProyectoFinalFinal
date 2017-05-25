@@ -56,6 +56,8 @@ public class Hilo extends Thread {
                     case "login":
                         iniciarSesionAdmin((String) msg.get(1), (String) msg.get(2));
                         break;
+                    case "agregarAdmin":
+                        agregarAdmin((Admin)msg.get(1));
                     case "agregarLibro":
                         agregarLibro((Libro) msg.get(1));
                         guardarBiblioteca();
@@ -100,6 +102,7 @@ public class Hilo extends Thread {
                     resp.add(admin.getNombre());
                     resp.add(admin.getApellidos());
                     objectOutput.writeObject(resp);
+                    objectOutput.flush();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -109,6 +112,7 @@ public class Hilo extends Thread {
                     resp.add(false);
                     resp.add("Contraseña incorrecta");
                     objectOutput.writeObject(resp);
+                    objectOutput.flush();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -119,6 +123,7 @@ public class Hilo extends Thread {
                 resp.add(false);
                 resp.add("Correo incorrecto");
                 objectOutput.writeObject(resp);
+                objectOutput.flush();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -409,6 +414,31 @@ public class Hilo extends Thread {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+
+    }
+
+    //-------------------------------GESTION DE USUARIOS ADMINISTRADORES---------------------------------------------------------
+    public void agregarAdmin(Admin admin) {
+        if (biblioteca.containsKey(admin.getCorreo())) {
+            try {
+                ArrayList resp = new ArrayList();
+                resp.add("El correo " + admin.getCorreo() + " ya se encuentra registrado");
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            try {
+                biblioteca.put(admin.getCorreo(), admin);
+                ArrayList resp = new ArrayList();
+                resp.add("Se registro el administrador con correo " + admin.getCorreo());
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
 
     }

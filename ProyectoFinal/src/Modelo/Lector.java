@@ -5,13 +5,14 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  *
  * @author invitado
  */
-public class Lector {
+public class Lector implements Serializable{
     private String nombre;
     private String apellidos;
     private String celular;
