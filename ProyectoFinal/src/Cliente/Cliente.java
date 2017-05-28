@@ -215,10 +215,10 @@ public class Cliente extends Thread{
         return imagen;
     }
     //----------------------------------------------GESTION DE USUARIOS LECTORES-----------------------------------------------// 
-    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, int edad, double saldo){
+    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, String preferencia, int edad, double saldo){
         ArrayList resp = new ArrayList();
         try {
-            Lector lector = new Lector(nombre, apellidos, celular, fechaNacimiento, correo, password, edad, saldo);
+            Lector lector = new Lector(nombre, apellidos, celular, fechaNacimiento, correo, password, preferencia, edad, saldo);
             ArrayList msg = new ArrayList();
             msg.add("agregarLector");
             msg.add(lector);

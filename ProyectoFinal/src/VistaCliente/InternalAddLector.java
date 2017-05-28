@@ -5,11 +5,14 @@
  */
 package VistaCliente;
 import ControladorCliente.ControladorCliente;
+import Modelo.Libro;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Luis
  */
+
 public class InternalAddLector extends javax.swing.JInternalFrame {
     private ControladorCliente cc;
     /**
@@ -18,6 +21,7 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
     public InternalAddLector(ControladorCliente cc) {
         this.cc = cc;
         initComponents();
+        this.jComboBoxPreferencia.setModel(new DefaultComboBoxModel(Libro.CATEGORIAS_LIBROS));
     }
 
     /**
@@ -47,6 +51,8 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
         buttonAgregarLector = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         fieldPassword = new javax.swing.JPasswordField();
+        jLabelPreferencia = new javax.swing.JLabel();
+        jComboBoxPreferencia = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -75,6 +81,10 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
 
         jLabel8.setText("jLabel8");
 
+        jLabelPreferencia.setText("Preferencia");
+
+        jComboBoxPreferencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -82,10 +92,6 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(50, 50, 50)
-                        .addComponent(fieldSaldo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(90, 90, 90)
@@ -111,12 +117,18 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buttonAgregarLector)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(77, 77, 77)
-                        .addComponent(fieldPassword)))
+                        .addComponent(fieldPassword))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(buttonAgregarLector)
+                            .addComponent(jLabelPreferencia))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldSaldo)
+                            .addComponent(jComboBoxPreferencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -142,7 +154,7 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(fieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -154,9 +166,12 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(fieldSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addComponent(buttonAgregarLector)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPreferencia)
+                    .addComponent(jComboBoxPreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addComponent(buttonAgregarLector))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -189,7 +204,9 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
             String password = new String(this.fieldPassword.getPassword());
             int edad = Integer.parseInt(this.fieldEdad.getText());
             double saldoInicial = Double.parseDouble(this.fieldSaldo.getText());
-            cc.agregarLector(nombre, apellidos, celular, fechaNacimiento, email, password, edad, saldoInicial);
+            String preferencia = (String)this.jComboBoxPreferencia.getSelectedItem();
+            
+            cc.agregarLector(nombre, apellidos, celular, fechaNacimiento, email, password, preferencia,  edad, saldoInicial);
             
         }catch(NumberFormatException nfe){
             JOptionPane.showMessageDialog(this, "Verifique que los campos esten correctamente diligenciados", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -208,6 +225,7 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JPasswordField fieldPassword;
     private javax.swing.JTextField fieldSaldo;
+    private javax.swing.JComboBox<String> jComboBoxPreferencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -216,6 +234,7 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelPreferencia;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,6 +19,7 @@ public class Lector implements Serializable{
     private String fechaNacimiento;
     private String correo;
     private String password;
+    private String preferencia; 
     private int edad;
     private double saldo;
     private ArrayList consecutivo;
@@ -27,7 +28,7 @@ public class Lector implements Serializable{
     private ArrayList valorRecarga;
     private int librosLeidos;
 
-    public Lector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, int edad, double saldo) {
+    public Lector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password,String preferencias, int edad, double saldo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.celular = celular;
@@ -36,6 +37,7 @@ public class Lector implements Serializable{
         this.password = password;
         this.edad = edad;
         this.saldo = saldo;
+        this.preferencia = preferencias; 
         this.librosLeidos = librosLeidos;
         this.consecutivo = new ArrayList();
         this.fechaRecarga = new ArrayList();
@@ -89,6 +91,14 @@ public class Lector implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPreferencia() {
+        return preferencia;
+    }
+
+    public void setPreferencia(String preferencia) {
+        this.preferencia = preferencia;
     }
 
     public int getEdad() {

@@ -123,9 +123,10 @@ public class ControladorCliente {
     
     //-------------------------------------GESTION DE LECTORES-------------------------------------------------------------------
     
-    public String agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, int edad, double saldo){
-        return (String)cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, password, edad, saldo).get(0);
+    public String agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password,String preferencia, int edad, double saldo){
+        return (String)cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, password, preferencia, edad, saldo).get(0);
     }
+    
     //-------------------------------------GESTION DE ADMINISTRADORES------------------------------------------------------------
     public String agregarAdmin(String nombre, String apellidos, String cargo, String celular, String email, String password, boolean autorizado){
         return (String)cliente.agregarAdmin(nombre, apellidos, cargo, celular, email, password, autorizado).get(0);

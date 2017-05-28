@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
  * @author invitado
  */
 public class Libro implements Serializable{
+    public static String[] CATEGORIAS_LIBROS={"CIENCIA FICCION", "TERROR", "ROMANCE", "AVENTURA", "INFANTIL"}; 
+  
     private String isbn;
     private int numeroPaginas;
     private String titulo;
