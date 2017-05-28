@@ -27,15 +27,15 @@ public class Hilo extends Thread {
 
     private Socket conexion;
     private HashMap biblioteca;
-    private HashMap usuarios;
+    private HashMap lectores;
     private HashMap admins;
     private ObjectInputStream objectInput;
     private ObjectOutputStream objectOutput;
 
-    public Hilo(Socket conexion, HashMap biblioteca, HashMap admins, HashMap usuarios) {
+    public Hilo(Socket conexion, HashMap biblioteca, HashMap admins, HashMap lectores) {
         this.conexion = conexion;
         this.biblioteca = biblioteca;
-        this.usuarios = usuarios;
+        this.lectores = lectores;
         this.admins = admins;
 
         try {
@@ -57,7 +57,16 @@ public class Hilo extends Thread {
                         iniciarSesionAdmin((String) msg.get(1), (String) msg.get(2));
                         break;
                     case "agregarAdmin":
-                        agregarAdmin((Admin)msg.get(1));
+                        agregarAdmin((Admin) msg.get(1));
+                        guardarAdmins();
+                        break;
+                    case "eliminarAdmin":
+                        eliminarAdmin((String) msg.get(1));
+                        guardarAdmins();
+                        break;
+                    case "consultarAdmin":
+                        consultarAdmin((String) msg.get(1));
+                        break;
                     case "agregarLibro":
                         agregarLibro((Libro) msg.get(1));
                         guardarBiblioteca();
@@ -91,16 +100,15 @@ public class Hilo extends Thread {
     }
 
     public void iniciarSesionAdmin(String correo, String pass) {
-        if (biblioteca.containsKey(correo)) {
-            System.out.println("Encontro el correo");
-            Admin admin = (Admin) biblioteca.get(correo);
-            if (admin.getPassword() == pass) {
+        if (admins.containsKey(correo)) {
+            Admin admin = (Admin) admins.get(correo);
+            if (admin.getPassword().equals(pass)) {
                 try {
                     ArrayList resp = new ArrayList();
                     resp.add(true);
-                    resp.add(correo);
                     resp.add(admin.getNombre());
                     resp.add(admin.getApellidos());
+                    resp.add(admin.isAutorizado());
                     objectOutput.writeObject(resp);
                     objectOutput.flush();
                 } catch (IOException ex) {
@@ -206,28 +214,18 @@ public class Hilo extends Thread {
                 String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido*/
 
         String isbn = (String) msg.get(1);
-        System.out.println(isbn);
         Libro libro = (Libro) biblioteca.get(isbn);
         int numeroPaginas = libro.getNumeroPaginas();
-        System.out.println(numeroPaginas);
         String contenido = libro.getContenido();
         String titulo = (String) msg.get(2);
-        System.out.println(titulo);
         String resumen = ((String) msg.get(3));
-        System.out.println(resumen);
         String autor = ((String) msg.get(4));
-        System.out.println(autor);
         ImageIcon portada = ((ImageIcon) msg.get(5));
         double precio = ((double) msg.get(6));
-        System.out.println(precio);
         String categoria = ((String) msg.get(7));
-        System.out.println(categoria);
         boolean bestSeller = ((boolean) msg.get(8));
-        System.out.println(bestSeller);
         int edadMinima = ((int) msg.get(9));
-        System.out.println(edadMinima);
         int calificacion = ((int) msg.get(10));
-        System.out.println(calificacion);
 
         if (biblioteca.containsKey(isbn) == true) {
             biblioteca.remove(isbn);
@@ -266,142 +264,9 @@ public class Hilo extends Thread {
         Programacion
          */
 
-        if (categoria == "Todos") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    libros.add(libro);
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Romance") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Romance") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Suspenso") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Suspenso") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (categoria == "Terror") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Terror") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Drama") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Drama") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Matematicas") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Matematicas") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Fisica") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Fisica") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Estadistica") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Estadistica") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else if (categoria == "Programacion") {
-            try {
-                Iterator it = this.biblioteca.values().iterator();
-                ArrayList libros = new ArrayList();
-                while (it.hasNext()) {
-                    Libro libro = (Libro) it.next();
-                    if (libro.getCategoria() == "Programacion") {
-                        libros.add(libro);
-                    }
-                }
-                objectOutput.writeObject(libros);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        
     }
-
+    //-------------------------------------SERIALIZACION DE USUARIOS Y LIBROS--------------------------------------------
     public void guardarBiblioteca() {
         ObjectOutputStream escritor;
         try {
@@ -417,10 +282,36 @@ public class Hilo extends Thread {
         }
 
     }
+    
+    public void guardarAdmins(){
+        ObjectOutputStream escritor;
+        try{
+            escritor = new ObjectOutputStream(new FileOutputStream("administradores.txt", false));
+            escritor.writeObject(admins);
+            escritor.flush();
+            escritor.close();
+            System.out.println("Administradores guardados");
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void guardarLectores(){
+        ObjectOutputStream escritor;
+        try{
+            escritor = new ObjectOutputStream(new FileOutputStream("lectores.txt", false));
+            escritor.writeObject(lectores);
+            escritor.flush();
+            escritor.close();
+            System.out.println("Lectores guardados");
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     //-------------------------------GESTION DE USUARIOS ADMINISTRADORES---------------------------------------------------------
     public void agregarAdmin(Admin admin) {
-        if (biblioteca.containsKey(admin.getCorreo())) {
+        if (admins.containsKey(admin.getCorreo())) {
             try {
                 ArrayList resp = new ArrayList();
                 resp.add("El correo " + admin.getCorreo() + " ya se encuentra registrado");
@@ -431,9 +322,68 @@ public class Hilo extends Thread {
             }
         } else {
             try {
-                biblioteca.put(admin.getCorreo(), admin);
+                admins.put(admin.getCorreo(), admin);
                 ArrayList resp = new ArrayList();
                 resp.add("Se registro el administrador con correo " + admin.getCorreo());
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+    public void eliminarAdmin(String correo) {
+        Object o = admins.remove(correo);
+        if (o == null) {
+            try {
+                ArrayList resp = new ArrayList();
+                resp.add("No existe un administrador con el correo ingresado");
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            try {
+                ArrayList resp = new ArrayList();
+                Admin admin = (Admin) o;
+                resp.add("Se elimino el administrador con correo: " + admin.getCorreo());
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void consultarAdmin(String correo) {
+//        this.nombre = nombre;
+//        this.apellidos = apellidos;
+//        this.cargo = cargo;
+//        this.celular = celular;
+//        this.correo = correo;
+//        this.password = password;
+//        this.autorizado = autorizado;
+        if (admins.containsKey(correo)) {
+            try {
+                ArrayList resp = new ArrayList();
+                Admin admin = (Admin) admins.get(correo);
+                resp.add(admin.getNombre());
+                resp.add(admin.getApellidos());
+                resp.add(admin.getCargo());
+                resp.add(admin.getCelular());
+                resp.add(admin.isAutorizado());
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            try {
+                ArrayList resp = new ArrayList();
+                resp.add("No se encontro un administrador con el correo " + correo);
                 objectOutput.writeObject(resp);
                 objectOutput.flush();
             } catch (IOException ex) {

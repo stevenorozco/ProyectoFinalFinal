@@ -19,7 +19,9 @@ import javax.swing.JTextField;
  */
 public class VistaAdmin extends javax.swing.JFrame {
 
-    private String usuario;
+    private String nombreAdmin;
+    private String apellidosAdmin;
+    private boolean autorizado;
     private ControladorCliente cc;
 
     /**
@@ -29,27 +31,39 @@ public class VistaAdmin extends javax.swing.JFrame {
         initComponents();
         cc = new ControladorCliente();
         cc.ejecutarCliente();
-        JTextField correo = new JTextField();
-        JPasswordField password = new JPasswordField();
-        JComponent[] entradas = {
-            new JLabel("Correo"),
-            correo,
-            new JLabel("Contraseña"),
-            password
-        };
-        ArrayList resp = null;
-        do {
-            int resultado = JOptionPane.showConfirmDialog(this, entradas, "LOGIN", JOptionPane.PLAIN_MESSAGE);
-            if(resultado == JOptionPane.CLOSED_OPTION){
-                System.exit(0);
-            }
-            if (resultado == JOptionPane.OK_OPTION) {
-                String usuario = correo.getText();
-                String pass = new String(password.getPassword());
-                resp = cc.iniciarSesionAdmin(usuario, pass);
-                System.out.println(resp.get(0));
-            }
-        } while ((boolean) resp.get(0) == false);
+        //------------------------------Creacion de la ventana Login----------------------------------------------
+        //Creacion de componentes del login
+//        JTextField correo = new JTextField();
+//        JPasswordField password = new JPasswordField();
+//        JComponent[] entradas = {
+//            new JLabel("Correo"),
+//            correo,
+//            new JLabel("Contraseña"),
+//            password
+//        };//Finaliza la creacion de la ventana login
+//        ArrayList resp = null;
+//        //Llamado y visualizacion de la ventana login
+//        do {
+//            int resultado = JOptionPane.showConfirmDialog(this, entradas, "LOGIN", JOptionPane.OK_CANCEL_OPTION);
+//            if(resultado == JOptionPane.CLOSED_OPTION || resultado==JOptionPane.CANCEL_OPTION){
+//                System.exit(0);
+//            }
+//            if (resultado == JOptionPane.OK_OPTION) {
+//                String usuario = correo.getText();
+//                String pass = new String(password.getPassword());
+//                resp = cc.iniciarSesionAdmin(usuario, pass);
+//                if(resp.size()<3){
+//                    JOptionPane.showMessageDialog(this, resp.get(1), "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+//                }else{
+//                autorizado = (boolean)resp.get(3);
+//                nombreAdmin = (String)resp.get(1);
+//                apellidosAdmin = (String)resp.get(2);
+//                }
+//            }
+//        } while ((boolean) resp.get(0) == false);
+//        
+//        JOptionPane.showMessageDialog(this, "Bienvenido " + nombreAdmin + " " + apellidosAdmin, "BIENVENIDO", JOptionPane.INFORMATION_MESSAGE);
+//        this.buttonAddOferta.setEnabled(autorizado);
     }
 
     /**
@@ -75,7 +89,7 @@ public class VistaAdmin extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        buttonAddOferta = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         buttonAddAdmin = new javax.swing.JButton();
         buttonDeleteAdmin = new javax.swing.JButton();
@@ -230,10 +244,10 @@ public class VistaAdmin extends javax.swing.JFrame {
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addDiscountOfferButton.png"))); // NOI18N
-        jButton7.setText("Agregar");
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonAddOferta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addDiscountOfferButton.png"))); // NOI18N
+        buttonAddOferta.setText("Agregar");
+        buttonAddOferta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonAddOferta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -241,7 +255,7 @@ public class VistaAdmin extends javax.swing.JFrame {
         gridBagConstraints.ipady = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 211, 6, 208);
-        jPanel4.add(jButton7, gridBagConstraints);
+        jPanel4.add(buttonAddOferta, gridBagConstraints);
 
         jTabbedPane1.addTab("Periodos de oferta", jPanel4);
 
@@ -267,6 +281,11 @@ public class VistaAdmin extends javax.swing.JFrame {
         buttonDeleteAdmin.setText("Eliminar");
         buttonDeleteAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonDeleteAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonDeleteAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDeleteAdminActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -278,6 +297,11 @@ public class VistaAdmin extends javax.swing.JFrame {
         buttonFindAdmin.setText("Consultar");
         buttonFindAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonFindAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonFindAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFindAdminActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -289,6 +313,11 @@ public class VistaAdmin extends javax.swing.JFrame {
         buttonEditAdmin.setText("Editar");
         buttonEditAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonEditAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonEditAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditAdminActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -371,6 +400,24 @@ public class VistaAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void buttonDeleteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteAdminActionPerformed
+        InternalDeleteAdmin del = new InternalDeleteAdmin(cc);
+        this.desktopPane.add(del);
+        del.setVisible(true);
+    }//GEN-LAST:event_buttonDeleteAdminActionPerformed
+
+    private void buttonFindAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFindAdminActionPerformed
+        InternalFindAdmin find = new InternalFindAdmin(cc);
+        this.desktopPane.add(find);
+        find.setVisible(true);
+    }//GEN-LAST:event_buttonFindAdminActionPerformed
+
+    private void buttonEditAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditAdminActionPerformed
+        InternalEditAdmin edit = new InternalEditAdmin(cc);
+        this.desktopPane.add(edit);
+        edit.setVisible(true);
+    }//GEN-LAST:event_buttonEditAdminActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -409,6 +456,7 @@ public class VistaAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddAdmin;
     private javax.swing.JButton buttonAddBook;
+    private javax.swing.JButton buttonAddOferta;
     private javax.swing.JButton buttonDeleteAdmin;
     private javax.swing.JButton buttonDeleteBook;
     private javax.swing.JButton buttonEditAdmin;
@@ -420,7 +468,6 @@ public class VistaAdmin extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

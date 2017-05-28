@@ -20,6 +20,7 @@ public class InternalFindBook extends javax.swing.JInternalFrame {
     public InternalFindBook(ControladorCliente cc) {
         this.cc = cc;
         initComponents();
+        this.textPane.setWrapStyleWord(true);
     }
 
     /**

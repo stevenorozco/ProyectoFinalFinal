@@ -262,6 +262,37 @@ public class Cliente extends Thread{
         
         return resp;
     }
+    
+    public ArrayList consultarAdmin(String correo){
+        ArrayList resp=null;
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("consultarAdmin");
+            msg.add(correo);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
+    public ArrayList consultarDatosAdmin(String correo) {
+        ArrayList resp = null;
+        try {
+            ArrayList msg = new ArrayList();
+            msg.add("consultarDatosAdmin");
+            msg.add(correo);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
 }
 
 
