@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,9 +14,9 @@ import javax.swing.ImageIcon;
  * @author invitado
  */
 public class Libro implements Serializable{
-    public static String[] CATEGORIAS_LIBROS={"CIENCIA FICCION", "TERROR", "ROMANCE", "AVENTURA", "INFANTIL"}; 
-  
     
+    public static String[] CATEGORIAS_LIBROS={"Romance", "Suspenso", "Terror", "Drama", "Matematicas" , "Fisica", "Estadistica", "Programacion"}; 
+  
     private String isbn;
     private int numeroPaginas;
     private String titulo;
@@ -141,4 +142,17 @@ public class Libro implements Serializable{
         this.contenido = contenido;
     }
     
+    //Este metodo permite recorrer un ArrayList de libros y filtrarlos por la categoria dada, 
+    //devolviendo un nuevo ArrayList con los libros sugeridos
+    public static ArrayList buscarLibrosRecomendadosPorCategoria(String categoria, ArrayList libros){
+        ArrayList<Libro> librosSugeridos = new ArrayList<Libro>();
+    
+        for (int i = 0; i < libros.size(); i++) {
+            Libro libro = (Libro) libros.get(i);
+            if(categoria.equals(libro.getCategoria()))
+                librosSugeridos.add(libro);         
+        }
+        return librosSugeridos;
+        
+    }
 }

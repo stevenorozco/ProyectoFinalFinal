@@ -83,7 +83,7 @@ public class InternalAddLector extends javax.swing.JInternalFrame {
 
         jLabelPreferencia.setText("Preferencia");
 
-        jComboBoxPreferencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxPreferencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Romance", "Suspenso", "Terror", "Drama", "Matematicas", "Fisica", "Estadistica", "Programacion" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
