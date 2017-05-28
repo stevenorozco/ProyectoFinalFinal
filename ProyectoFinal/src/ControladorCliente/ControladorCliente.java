@@ -163,6 +163,18 @@ public class ControladorCliente {
     }
     
     public String[] consultarDatosAdmin(String correo){
-        
+        return null; 
     }
+    
 }
+
+
+/* 
+    public mostrarLibrosSugeridos(){
+        Lector Ul = new Lector();
+        
+       ArraList librosSugeridos = Libro.buscarLibrosRecomendadosPorCategoria(Ul.getCategoriaPreferida(), todosLosLibros);
+        
+        JoptionPane.ShowMesssage("Te recomendamos leer:" + librosSugereidos);    
+    }
+  */
