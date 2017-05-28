@@ -5,6 +5,7 @@
  */
 package VistaCliente;
 import ControladorCliente.ControladorCliente;
+import java.util.ArrayList;
 /**
  *
  * @author Luis
@@ -191,7 +192,12 @@ public class InternalEditAdmin extends javax.swing.JInternalFrame {
 
     private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
         String correo = this.fieldCorreo.getText();
-        String[] datos = cc.consultarDatosAdmin(correo);
+        ArrayList datos = cc.consultarDatosAdmin(correo);
+        this.fieldNombre.setText((String)datos.get(0));
+        this.fieldApellidos.setText((String)datos.get(1));
+        this.fieldCargo.setText((String)datos.get(2));
+        this.fieldCelular.setText((String)datos.get(3));
+        this.checkOfertas.setSelected((boolean)datos.get(4));
     }//GEN-LAST:event_cargarDatosActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed

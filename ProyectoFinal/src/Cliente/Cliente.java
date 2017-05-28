@@ -293,6 +293,11 @@ public class Cliente extends Thread{
         return resp;
     }
     
+    public String editarAdmin(String nombre, String apellidos, String cargo, String celular, boolean autorizado){
+        ArrayList msg = new ArrayList();
+        
+    }
+    
 }
 
 
