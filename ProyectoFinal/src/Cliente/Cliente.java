@@ -230,6 +230,71 @@ public class Cliente extends Thread{
         }
         return resp;
     }
+    
+    public ArrayList eliminarLector(String correo){
+        ArrayList resp = new ArrayList();
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("eliminarLector");
+            msg.add(correo);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
+    public ArrayList consultarLector(String correo){
+        ArrayList resp = null;
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("consultarLector");
+            msg.add(correo);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
+    public ArrayList consultarDatosLector(String correo){
+        ArrayList resp = null;
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("consultarDatosLector");
+            msg.add(correo);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+        }catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
+    public ArrayList editarLector(String correo, String nombre, String apellidos, String celular, String fechaNacimiento, int edad){
+        ArrayList resp = null;
+        try{
+            ArrayList msg = new ArrayList();
+            msg.add("editarLector");
+            msg.add(correo);
+            msg.add(nombre);
+            msg.add(apellidos);
+            msg.add(celular);
+            msg.add(fechaNacimiento);
+            msg.add(edad);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
     //-------------------------------------------GESTION DE USUARIOS ADMINISTRADORES-------------------------------------------------
     public ArrayList agregarAdmin(String nombre, String apellidos, String cargo, String celular, String email, String password, boolean autorizacion){
         ArrayList resp=null;
@@ -293,9 +358,24 @@ public class Cliente extends Thread{
         return resp;
     }
     
-    public String editarAdmin(String nombre, String apellidos, String cargo, String celular, boolean autorizado){
-        ArrayList msg = new ArrayList();
-        
+    public ArrayList editarAdmin(String correo, String nombre, String apellidos, String cargo, String celular, boolean autorizado){
+        ArrayList resp = null;
+        try {
+            ArrayList msg = new ArrayList();
+            msg.add("editarAdmin");
+            msg.add(correo);
+            msg.add(nombre);
+            msg.add(apellidos);
+            msg.add(cargo);
+            msg.add(celular);
+            msg.add(autorizado);
+            objectOutput.writeObject(msg);
+            objectOutput.flush();
+            resp = (ArrayList)objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
     }
     
 }

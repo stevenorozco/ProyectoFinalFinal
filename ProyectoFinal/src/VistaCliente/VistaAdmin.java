@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  * @author Luis
  */
 public class VistaAdmin extends javax.swing.JFrame {
-
+    
     private String nombreAdmin;
     private String apellidosAdmin;
     private boolean autorizado;

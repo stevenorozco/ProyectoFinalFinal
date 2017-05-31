@@ -6,6 +6,7 @@
 package VistaCliente;
 import ControladorCliente.ControladorCliente;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Luis
@@ -19,6 +20,7 @@ public class InternalEditAdmin extends javax.swing.JInternalFrame {
     public InternalEditAdmin(ControladorCliente cc) {
         this.cc = cc;
         initComponents();
+        this.buttonEdit.setEnabled(false);
     }
 
     /**
@@ -193,18 +195,29 @@ public class InternalEditAdmin extends javax.swing.JInternalFrame {
     private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
         String correo = this.fieldCorreo.getText();
         ArrayList datos = cc.consultarDatosAdmin(correo);
-        this.fieldNombre.setText((String)datos.get(0));
-        this.fieldApellidos.setText((String)datos.get(1));
-        this.fieldCargo.setText((String)datos.get(2));
-        this.fieldCelular.setText((String)datos.get(3));
-        this.checkOfertas.setSelected((boolean)datos.get(4));
+        if((boolean)datos.get(0)) {
+            this.fieldNombre.setText((String) datos.get(1));
+            this.fieldApellidos.setText((String) datos.get(2));
+            this.fieldCargo.setText((String) datos.get(3));
+            this.fieldCelular.setText((String) datos.get(4));
+            this.checkOfertas.setSelected((boolean) datos.get(5));
+            this.buttonEdit.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, (String) datos.get(1), "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_cargarDatosActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
+        String correo = this.fieldCorreo.getText();
         String nombre = this.fieldNombre.getText();
         String apellidos = this.fieldApellidos.getText();
         String cargo = this.fieldCargo.getText();
         String celular = this.fieldCelular.getText();
+        boolean autorizado = this.checkOfertas.isSelected();
+        String resp = cc.editarAdmin(correo, nombre, apellidos, cargo, celular, autorizado);
+        JOptionPane.showMessageDialog(this, resp);
+
     }//GEN-LAST:event_buttonEditActionPerformed
 
 

@@ -125,8 +125,33 @@ public class ControladorCliente {
 
     //-------------------------------------GESTION DE LECTORES-------------------------------------------------------------------
     
-    public String agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password,String preferencia, int edad, double saldo){
+    public String agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, ArrayList preferencia, int edad, double saldo){
         return (String)cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, password, preferencia, edad, saldo).get(0);
+    }
+    
+    public String eliminarLector(String correo){
+        return (String)cliente.eliminarLector(correo).get(0);
+    }
+    
+    public String consultarLector(String correo){
+        ArrayList msg = cliente.consultarLector(correo);
+        String mensaje = "Nombre: " + (String)msg.get(0) +
+                "\nApellidos: "+ (String)msg.get(1) +
+                "\nCelular: " + (String)msg.get(2) +
+                "\nFecha de nacimiento: "+ (String)msg.get(3)+
+                "\nEdad: "+ (String)msg.get(4)+
+                "\nSaldo: "+(String)msg.get(5)+
+                "\nLibros leidos"+(String)msg.get(6);
+        return mensaje;
+    }
+    
+    public ArrayList consultarDatosLector(String correo){
+        return cliente.consultarDatosLector(correo);
+    }
+    
+    public String editarLector(String correo, String nombre, String apellidos, String celular, String fechaNacimiento, int edad){
+        return (String)cliente.editarLector(correo, nombre, apellidos, celular, fechaNacimiento, edad).get(0);
+        
     }
     
     //-------------------------------------GESTION DE ADMINISTRADORES------------------------------------------------------------
@@ -162,8 +187,13 @@ public class ControladorCliente {
         }
     }
     
-    public String[] consultarDatosAdmin(String correo){
-        return null; 
+     public ArrayList consultarDatosAdmin(String correo){
+        return cliente.consultarDatosAdmin(correo);
+        
+    }
+    
+    public String editarAdmin(String correo, String nombre, String apellidos, String cargo, String celular, boolean autorizado){
+       return (String)cliente.editarAdmin(correo, nombre, apellidos, cargo, celular, autorizado).get(0);
     }
     
 }

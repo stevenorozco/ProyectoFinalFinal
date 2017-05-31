@@ -47,12 +47,12 @@ public class Servidor extends Thread{
             System.out.println("No se encontro un archivo de administradores");
             guardarAdmins();
         }
-        try {
-            cargarLectores();
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se encontro un archivo de lectores");
-            guardarLectores();
-        }
+//        try {
+//            cargarLectores();
+//        } catch (FileNotFoundException ex) {
+//            System.out.println("No se encontro un archivo de lectores");
+//            guardarLectores();
+//        }
         try {
             cargarBiblioteca();
         } catch (FileNotFoundException ex) {

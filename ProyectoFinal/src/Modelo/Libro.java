@@ -14,8 +14,6 @@ import javax.swing.ImageIcon;
  * @author invitado
  */
 public class Libro implements Serializable{
-    
-    public static String[] CATEGORIAS_LIBROS={"Romance", "Suspenso", "Terror", "Drama", "Matematicas" , "Fisica", "Estadistica", "Programacion"}; 
   
     private String isbn;
     private int numeroPaginas;
@@ -140,19 +138,5 @@ public class Libro implements Serializable{
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
-    }
-    
-    //Este metodo permite recorrer un ArrayList de libros y filtrarlos por la categoria dada, 
-    //devolviendo un nuevo ArrayList con los libros sugeridos
-    public static ArrayList buscarLibrosRecomendadosPorCategoria(String categoria, ArrayList libros){
-        ArrayList<Libro> librosSugeridos = new ArrayList<Libro>();
-    
-        for (int i = 0; i < libros.size(); i++) {
-            Libro libro = (Libro) libros.get(i);
-            if(categoria.equals(libro.getCategoria()))
-                librosSugeridos.add(libro);         
-        }
-        return librosSugeridos;
-        
     }
 }

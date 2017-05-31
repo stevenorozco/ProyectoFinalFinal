@@ -30,8 +30,6 @@ public class VistaServidor extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         buttonStartSercer = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        fieldPuerto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         labelPuerto = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -47,8 +45,6 @@ public class VistaServidor extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Puerto");
-
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 255));
         jLabel2.setText("e-Book Server");
@@ -63,16 +59,13 @@ public class VistaServidor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(fieldPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(buttonStartSercer)
-                            .addComponent(labelPuerto)))
+                        .addComponent(labelPuerto))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonStartSercer)))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -80,10 +73,6 @@ public class VistaServidor extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonStartSercer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -127,11 +116,10 @@ public class VistaServidor extends javax.swing.JFrame {
 
     private void buttonStartSercerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartSercerActionPerformed
         try{
-           int puerto = Integer.parseInt(this.fieldPuerto.getText());
-           cs = new ControladorServidor(puerto);
+           
+           cs = new ControladorServidor(1144);
            cs.iniciarServidor();
-           this.fieldPuerto.setText("");
-           this.labelPuerto.setText("Servidor iniciado con puerto " + puerto);
+           this.labelPuerto.setText("Servidor iniciado con puerto 1144");
         }catch(NumberFormatException ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Ingrese un valor numerico en el campo \"puerto\"", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -181,8 +169,6 @@ public class VistaServidor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonStartSercer;
     private javax.swing.JMenuItem cerrarConexion;
-    private javax.swing.JTextField fieldPuerto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
