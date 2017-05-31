@@ -8,7 +8,7 @@ package Servidor;
 import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
-import Hilo.Hilo;
+import Servidor.Hilo.Hilo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

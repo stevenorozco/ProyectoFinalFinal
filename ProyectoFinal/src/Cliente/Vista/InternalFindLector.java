@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
-import ControladorCliente.ControladorCliente;
-import javax.swing.JOptionPane;
+package Cliente.Vista;
+import Cliente.Controlador.Controlador;
 /**
  *
  * @author Luis
  */
-public class InternalDeleteBook extends javax.swing.JInternalFrame {
-    ControladorCliente cc;
+public class InternalFindLector extends javax.swing.JInternalFrame {
+    private Controlador cc;
     /**
-     * Creates new form InternalDeleteBook
+     * Creates new form InternalFindLector
      */
-    public InternalDeleteBook(ControladorCliente cc) {
+    public InternalFindLector(Controlador cc) {
         this.cc = cc;
         initComponents();
     }
@@ -31,21 +30,19 @@ public class InternalDeleteBook extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fieldIsbn = new javax.swing.JTextField();
-        buttonDeleteLibro = new javax.swing.JButton();
+        fieldCorreo = new javax.swing.JTextField();
+        buttonFind = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textArea = new javax.swing.JTextArea();
 
-        setClosable(true);
-        setIconifiable(true);
-        setTitle("Eliminar libro");
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102)));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
+        jLabel1.setText("Ingrese el correo del lector que desea consultar");
 
-        jLabel1.setText("Ingrese el ISBN del libro que desea eliminar");
-
-        buttonDeleteLibro.setText("Eliminar");
-        buttonDeleteLibro.addActionListener(new java.awt.event.ActionListener() {
+        buttonFind.setText("Consultar");
+        buttonFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeleteLibroActionPerformed(evt);
+                buttonFindActionPerformed(evt);
             }
         });
 
@@ -57,8 +54,8 @@ public class InternalDeleteBook extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(fieldIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonDeleteLibro))
+                    .addComponent(fieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonFind))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -67,48 +64,52 @@ public class InternalDeleteBook extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonDeleteLibro)
+                .addComponent(buttonFind)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonDeleteLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteLibroActionPerformed
-        try{
-            String isbn = this.fieldIsbn.getText();
-            String mensaje = cc.eliminarLibro(isbn);
-            JOptionPane.showMessageDialog(this, mensaje);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        
-    }//GEN-LAST:event_buttonDeleteLibroActionPerformed
+    private void buttonFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFindActionPerformed
+        String correo = this.fieldCorreo.getText();
+        this.textArea.setText(cc.consultarLector(correo));
+    }//GEN-LAST:event_buttonFindActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonDeleteLibro;
-    private javax.swing.JTextField fieldIsbn;
+    private javax.swing.JButton buttonFind;
+    private javax.swing.JTextField fieldCorreo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,41 +11,28 @@ import java.util.*;
  * @author invitado
  */
 public class PeriodoOferta extends Thread{
-    private Date fechaInicial;
-    private Date fechaFinal;
+    private long tiempoOferta;
     private int porcentajeDescuento;
 
-    public PeriodoOferta(Date fechaInicial, Date fechaFinal, int porcentajeDescuento) {
-        this.fechaInicial = fechaInicial;
-        this.fechaFinal = fechaFinal;
+    public PeriodoOferta(long tiempoOferta, int porcentajeDescuento) {
+        this.tiempoOferta = tiempoOferta;
         this.porcentajeDescuento = porcentajeDescuento;
     }
-    
-    //---------METODOS GET------------
-    public Date getFechaInicial() {
-        return fechaInicial;
+
+    public long getTiempoOferta() {
+        return tiempoOferta;
     }
 
-    public Date getFechaFinal() {
-        return fechaFinal;
+    public void setTiempoOferta(long tiempoOferta) {
+        this.tiempoOferta = tiempoOferta;
     }
 
     public int getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
-    
-    //-----------------METODOS SET------------------
-    public void setFechaInicial(Date fechaInicial) {
-        this.fechaInicial = fechaInicial;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
 
     public void setPorcentajeDescuento(int porcentajeDescuento) {
         this.porcentajeDescuento = porcentajeDescuento;
     }
-    
     
 }

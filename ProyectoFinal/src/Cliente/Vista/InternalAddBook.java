@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
+package Cliente.Vista;
 
 import javax.swing.JFileChooser;
-import ControladorCliente.ControladorCliente;
+import Cliente.Controlador.Controlador;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Luis
  */
 public class InternalAddBook extends javax.swing.JInternalFrame {
-    ControladorCliente cc;
+    Controlador cc;
     private int numeroPaginas;
     private String contenido;
     private ImageIcon portada;
@@ -24,7 +24,7 @@ public class InternalAddBook extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalAddBoo
      */
-    public InternalAddBook(ControladorCliente cc){
+    public InternalAddBook(Controlador cc){
         this.cc = cc;
         initComponents();
     }

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
+package Cliente.Vista;
 
-import ControladorCliente.ControladorCliente;
+import Cliente.Controlador.Controlador;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -22,14 +22,14 @@ public class VistaAdmin extends javax.swing.JFrame {
     private String nombreAdmin;
     private String apellidosAdmin;
     private boolean autorizado;
-    private ControladorCliente cc;
+    private Controlador cc;
 
     /**
      * Creates new form VistaAdmin
      */
     public VistaAdmin() {
         initComponents();
-        cc = new ControladorCliente();
+        cc = new Controlador();
         cc.ejecutarCliente();
         //------------------------------Creacion de la ventana Login----------------------------------------------
         //Creacion de componentes del login

@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
-import ControladorCliente.ControladorCliente;
+package Cliente.Vista;
+import Cliente.Controlador.Controlador;
 import Modelo.Libro;
 import java.util.ArrayList;
 /**
@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * @author Luis
  */
 public class InternalFindCategory extends javax.swing.JInternalFrame {
-    ControladorCliente cc;
+    Controlador cc;
     /**
      * Creates new form InternalFindCategory
      */
-    public InternalFindCategory(ControladorCliente cc) {
+    public InternalFindCategory(Controlador cc) {
         this.cc = cc;
         initComponents();
     }

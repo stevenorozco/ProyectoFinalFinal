@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
-import ControladorCliente.ControladorCliente;
+package Cliente.Vista;
+import Cliente.Controlador.Controlador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  * @author Luis
  */
 public class InternalEditAdmin extends javax.swing.JInternalFrame {
-    private ControladorCliente cc;
+    private Controlador cc;
     /**
      * Creates new form InternalEditAdmin
      * @param cc
      */
-    public InternalEditAdmin(ControladorCliente cc) {
+    public InternalEditAdmin(Controlador cc) {
         this.cc = cc;
         initComponents();
         this.buttonEdit.setEnabled(false);

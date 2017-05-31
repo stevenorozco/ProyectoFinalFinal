@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
-import ControladorCliente.ControladorCliente;
+package Cliente.Vista;
+import Cliente.Controlador.Controlador;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Luis
  */
-public class InternalDeleteLector extends javax.swing.JInternalFrame {
-    private ControladorCliente cc;
+public class InternalDeleteBook extends javax.swing.JInternalFrame {
+    Controlador cc;
     /**
-     * Creates new form InternalDeleteLector
+     * Creates new form InternalDeleteBook
      */
-    public InternalDeleteLector(ControladorCliente cc) {
+    public InternalDeleteBook(Controlador cc) {
         this.cc = cc;
         initComponents();
     }
@@ -31,26 +31,21 @@ public class InternalDeleteLector extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fieldCorreo = new javax.swing.JTextField();
-        buttonDelete = new javax.swing.JButton();
+        fieldIsbn = new javax.swing.JTextField();
+        buttonDeleteLibro = new javax.swing.JButton();
 
         setClosable(true);
-        setForeground(java.awt.Color.orange);
         setIconifiable(true);
-        setTitle("Eliminar lector");
+        setTitle("Eliminar libro");
 
-        jLabel1.setText("Ingrese el correo del lector que eliminara");
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
 
-        fieldCorreo.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Ingrese el ISBN del libro que desea eliminar");
+
+        buttonDeleteLibro.setText("Eliminar");
+        buttonDeleteLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldCorreoActionPerformed(evt);
-            }
-        });
-
-        buttonDelete.setText("Eliminar");
-        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeleteActionPerformed(evt);
+                buttonDeleteLibroActionPerformed(evt);
             }
         });
 
@@ -62,8 +57,8 @@ public class InternalDeleteLector extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(fieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonDelete))
+                    .addComponent(fieldIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonDeleteLibro))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -72,9 +67,9 @@ public class InternalDeleteLector extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonDelete)
+                .addComponent(buttonDeleteLibro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -98,20 +93,21 @@ public class InternalDeleteLector extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fieldCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCorreoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldCorreoActionPerformed
-
-    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        String correo = this.fieldCorreo.getText();
-        String resp = cc.eliminarLector(correo);
-        JOptionPane.showMessageDialog(this, resp);
-    }//GEN-LAST:event_buttonDeleteActionPerformed
+    private void buttonDeleteLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteLibroActionPerformed
+        try{
+            String isbn = this.fieldIsbn.getText();
+            String mensaje = cc.eliminarLibro(isbn);
+            JOptionPane.showMessageDialog(this, mensaje);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_buttonDeleteLibroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonDelete;
-    private javax.swing.JTextField fieldCorreo;
+    private javax.swing.JButton buttonDeleteLibro;
+    private javax.swing.JTextField fieldIsbn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

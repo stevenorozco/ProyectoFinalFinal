@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
-import ControladorCliente.ControladorCliente;
+package Cliente.Vista;
+import Cliente.Controlador.Controlador;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 /**
@@ -12,12 +12,12 @@ import javax.swing.ImageIcon;
  * @author Luis
  */
 public class InternalFindBook extends javax.swing.JInternalFrame {
-    ControladorCliente cc;
+    Controlador cc;
     /**
      * Creates new form InternalFindBook
      * @param cc
      */
-    public InternalFindBook(ControladorCliente cc) {
+    public InternalFindBook(Controlador cc) {
         this.cc = cc;
         initComponents();
         this.textPane.setWrapStyleWord(true);

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
+package Cliente.Vista;
 
 import javax.swing.JFileChooser;
-import ControladorCliente.ControladorCliente;
+import Cliente.Controlador.Controlador;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 /**
@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
  * @author Luis
  */
 public class InternalEditBook extends javax.swing.JInternalFrame {
-    ControladorCliente cc;
+    Controlador cc;
     private ImageIcon portada;
     /**
      * Creates new form InternalEditBook
      */
-    public InternalEditBook(ControladorCliente cc) {
+    public InternalEditBook(Controlador cc) {
         this.cc = cc;
         initComponents();
         this.buttonEditar.setEnabled(false);

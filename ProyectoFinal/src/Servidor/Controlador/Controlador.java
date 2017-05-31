@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ControladorServidor;
+package Servidor.Controlador;
 import Servidor.Servidor;
 /**
  *
  * @author Luis
  */
-public class ControladorServidor {
+public class Controlador {
     Servidor servidor;
     
-    public ControladorServidor(int puerto){
+    public Controlador(int puerto){
         servidor = new Servidor(puerto);
     }
     

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ControladorCliente;
+package Cliente.Controlador;
 
 import Cliente.Cliente;
 import Modelo.Libro;
@@ -14,11 +14,11 @@ import javax.swing.ImageIcon;
  *
  * @author Luis
  */
-public class ControladorCliente {
+public class Controlador {
 
     Cliente cliente;
 
-    public ControladorCliente() {
+    public Controlador() {
         this.cliente = new Cliente();
     }
 

@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
-import ControladorCliente.ControladorCliente;
+package Cliente.Vista;
+import Cliente.Controlador.Controlador;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -14,11 +14,11 @@ import javax.swing.JOptionPane;
  */
 
 public class InternalAddLector extends javax.swing.JInternalFrame {
-    private ControladorCliente cc;
+    private Controlador cc;
     /**
      * Creates new form InternalAddLector
      */
-    public InternalAddLector(ControladorCliente cc) {
+    public InternalAddLector(Controlador cc) {
         this.cc = cc;
         initComponents();
     }

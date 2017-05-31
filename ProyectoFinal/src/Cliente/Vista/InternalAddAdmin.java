@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VistaCliente;
+package Cliente.Vista;
 
-import ControladorCliente.ControladorCliente;
+import Cliente.Controlador.Controlador;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Luis
  */
 public class InternalAddAdmin extends javax.swing.JInternalFrame {
-    private ControladorCliente cc;
+    private Controlador cc;
     /**
      * Creates new form InternalAddAdmin
      */
-    public InternalAddAdmin(ControladorCliente cc) {
+    public InternalAddAdmin(Controlador cc) {
         this.cc = cc;        
         initComponents();
     }
