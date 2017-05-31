@@ -14,8 +14,6 @@ import Modelo.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -79,6 +77,7 @@ public class Hilo extends Thread {
                         break;
                     case "eliminarLector":
                         eliminarLector((String)msg.get(1));
+                        guardarLectores();
                         break;
                     case "consultarLector":
                         consultarLector((String)msg.get(1));
@@ -86,6 +85,8 @@ public class Hilo extends Thread {
                     case "consultarDatosLector":
                         consultarDatosLector((String)msg.get(1));
                         break;
+                    case "editarLector":
+                        editarLector(msg);
                     case "agregarLibro":
                         agregarLibro((Libro) msg.get(1));
                         guardarBiblioteca();
