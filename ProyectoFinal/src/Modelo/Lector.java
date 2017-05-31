@@ -12,37 +12,40 @@ import java.util.*;
  *
  * @author invitado
  */
-public class Lector implements Serializable{
+public class Lector implements Serializable {
+
     private String nombre;
     private String apellidos;
     private String celular;
     private String fechaNacimiento;
     private String correo;
     private String password;
-    private String preferencia; 
+    private String preferencia;
     private int edad;
     private double saldo;
     private ArrayList consecutivo;
     private ArrayList fechaRecarga;
     private ArrayList horaRecarga;
     private ArrayList valorRecarga;
+    private ArrayList misLibros;
     private int librosLeidos;
 
-    public Lector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password,String preferencias, int edad, double saldo) {
+    public Lector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, String preferencia, int edad, double saldo, int librosLeidos) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.celular = celular;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.password = password;
+        this.preferencia = preferencia;
         this.edad = edad;
         this.saldo = saldo;
-        this.preferencia = preferencias; 
         this.librosLeidos = librosLeidos;
-        this.consecutivo = new ArrayList();
-        this.fechaRecarga = new ArrayList();
-        this.horaRecarga = new ArrayList();
-        this.valorRecarga = new ArrayList();
+        consecutivo = new ArrayList();
+        fechaRecarga = new ArrayList();
+        horaRecarga = new ArrayList();
+        valorRecarga = new ArrayList();
+        misLibros = new ArrayList();
     }
 
     public String getNombre() {
@@ -149,6 +152,14 @@ public class Lector implements Serializable{
         this.valorRecarga = valorRecarga;
     }
 
+    public ArrayList getMisLibros() {
+        return misLibros;
+    }
+
+    public void setMisLibros(ArrayList misLibros) {
+        this.misLibros = misLibros;
+    }
+
     public int getLibrosLeidos() {
         return librosLeidos;
     }
@@ -157,6 +168,7 @@ public class Lector implements Serializable{
         this.librosLeidos = librosLeidos;
     }
     
-    
+    public void recargarSaldo(double recarga){
+        this.saldo+=recarga;
+    }
 }
-   

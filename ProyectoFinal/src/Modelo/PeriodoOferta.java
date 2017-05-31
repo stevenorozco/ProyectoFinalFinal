@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Modelo;
-import java.util.*;
 
 /**
  *
@@ -17,6 +16,11 @@ public class PeriodoOferta extends Thread{
     public PeriodoOferta(long tiempoOferta, int porcentajeDescuento) {
         this.tiempoOferta = tiempoOferta;
         this.porcentajeDescuento = porcentajeDescuento;
+    }
+    
+    @Override
+    public synchronized void run(){
+        
     }
 
     public long getTiempoOferta() {
