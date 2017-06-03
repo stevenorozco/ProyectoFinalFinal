@@ -11,11 +11,14 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import Modelo.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -39,12 +42,28 @@ public class Cliente extends Thread{
         ArrayList msg = null;
         try {
             ArrayList login = new ArrayList();
-            login.add("login");
+            login.add("iniciarSesionAdmin");
             login.add(user);
             login.add(pass);
             objectOutput.writeObject(login);
             objectOutput.flush();
             msg = (ArrayList) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return msg;
+    }
+    
+    public ArrayList iniciarSesionLector(String user, String pass){
+        ArrayList msg = null;
+        try{
+            ArrayList login = new ArrayList();
+            login.add("iniciarSesionLector");
+            login.add(user);
+            login.add(pass);
+            objectOutput.writeObject(login);
+            objectOutput.flush();
+            msg = (ArrayList)objectInput.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -89,7 +108,7 @@ public class Cliente extends Thread{
     }
     //----------------------------------------------GESTION DE LIBROS---------------------------------------------------------
     public String agregarLibro(String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen,
-            double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido){
+            double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, ArrayList contenido){
         String mensaje="";
         try {
             Libro libro = new Libro(isbn, numeroPaginas, titulo, resumen, autor, imagen, precio, categoria, bestSeller,
@@ -146,9 +165,10 @@ public class Cliente extends Thread{
          return resp;
     }
     
-    public String editarLibro(String isbn, String titulo, String resumen, String autor, ImageIcon portada,
+    public ArrayList editarLibro(String isbn, String titulo, String resumen, String autor, ImageIcon portada,
             double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion){
         String mensaje="";
+        ArrayList resp = new ArrayList();
         try {
             ArrayList datos = new ArrayList();
             datos.add("editarLibro");
@@ -165,14 +185,14 @@ public class Cliente extends Thread{
             
             objectOutput.writeObject(datos);
             objectOutput.flush();
-            ArrayList resp = (ArrayList)objectInput.readObject();
-            mensaje = (String)resp.get(0);
+            resp = (ArrayList)objectInput.readObject();
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return mensaje;
+        return resp;
     }
     
     public ArrayList buscarPorCategoria(String categoria){
@@ -210,12 +230,18 @@ public class Cliente extends Thread{
     }
     
     public ImageIcon seleccionarPortada(String path){
-        ImageIcon imagen = new ImageIcon(path);
-        
+        BufferedImage bi = null;
+        ImageIcon imagen = null;
+        try{
+            bi = ImageIO.read(new File(path));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }        
+        imagen = new ImageIcon(bi);
         return imagen;
     }
     //----------------------------------------------GESTION DE USUARIOS LECTORES-----------------------------------------------// 
-    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, String preferencia, int edad, double saldo){
+    public ArrayList agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, ArrayList preferencia, int edad, double saldo){
         ArrayList resp = new ArrayList();
         try {
             Lector lector = new Lector(nombre, apellidos, celular, fechaNacimiento, correo, password, preferencia, edad, saldo);

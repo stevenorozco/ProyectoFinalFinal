@@ -14,6 +14,9 @@ import Modelo.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -50,9 +53,11 @@ public class Hilo extends Thread {
                 System.out.println("Thread running");
                 ArrayList msg = (ArrayList) objectInput.readObject();
                 switch ((String) msg.get(0)) {
-                    case "login":
+                    case "iniciarSesionAdmin":
                         iniciarSesionAdmin((String) msg.get(1), (String) msg.get(2));
                         break;
+                    case "iniciarSesionLector":
+                        iniciarSesionLector((String) msg.get(1), (String) msg.get(2));
                     case "agregarAdmin":
                         agregarAdmin((Admin) msg.get(1));
                         guardarAdmins();
@@ -72,21 +77,22 @@ public class Hilo extends Thread {
                         guardarAdmins();
                         break;
                     case "agregarLector":
-                        agregarLector((Lector)msg.get(1));
+                        agregarLector((Lector) msg.get(1));
                         guardarLectores();
                         break;
                     case "eliminarLector":
-                        eliminarLector((String)msg.get(1));
+                        eliminarLector((String) msg.get(1));
                         guardarLectores();
                         break;
                     case "consultarLector":
-                        consultarLector((String)msg.get(1));
+                        consultarLector((String) msg.get(1));
                         break;
                     case "consultarDatosLector":
-                        consultarDatosLector((String)msg.get(1));
+                        consultarDatosLector((String) msg.get(1));
                         break;
                     case "editarLector":
                         editarLector(msg);
+                        break;
                     case "agregarLibro":
                         agregarLibro((Libro) msg.get(1));
                         guardarBiblioteca();
@@ -129,6 +135,45 @@ public class Hilo extends Thread {
                     resp.add(admin.getNombre());
                     resp.add(admin.getApellidos());
                     resp.add(admin.isAutorizado());
+                    objectOutput.writeObject(resp);
+                    objectOutput.flush();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                try {
+                    ArrayList resp = new ArrayList();
+                    resp.add(false);
+                    resp.add("Contraseña incorrecta");
+                    objectOutput.writeObject(resp);
+                    objectOutput.flush();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } else {
+            try {
+                ArrayList resp = new ArrayList();
+                resp.add(false);
+                resp.add("Correo incorrecto");
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void iniciarSesionLector(String correo, String pass) {
+        if (lectores.containsKey(correo)) {
+            Lector lector = (Lector) lectores.get(correo);
+            if (lector.getPassword().equals(pass)) {
+                try {
+                    ArrayList resp = new ArrayList();
+                    resp.add(true);
+                    resp.add(correo);
+                    resp.add(lector.getNombre());
+                    resp.add(lector.getApellidos());
                     objectOutput.writeObject(resp);
                     objectOutput.flush();
                 } catch (IOException ex) {
@@ -232,60 +277,62 @@ public class Hilo extends Thread {
     public void editarLibro(ArrayList msg) {
         /*String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen, double precio,
                 String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido*/
-
+        ArrayList resp = new ArrayList();
         String isbn = (String) msg.get(1);
         Libro libro = (Libro) biblioteca.get(isbn);
-        int numeroPaginas = libro.getNumeroPaginas();
-        String contenido = libro.getContenido();
-        String titulo = (String) msg.get(2);
-        String resumen = ((String) msg.get(3));
-        String autor = ((String) msg.get(4));
-        ImageIcon portada = ((ImageIcon) msg.get(5));
-        double precio = ((double) msg.get(6));
-        String categoria = ((String) msg.get(7));
-        boolean bestSeller = ((boolean) msg.get(8));
-        int edadMinima = ((int) msg.get(9));
-        int calificacion = ((int) msg.get(10));
-
-        if (biblioteca.containsKey(isbn) == true) {
-            biblioteca.remove(isbn);
-            Libro l = new Libro(isbn, numeroPaginas, titulo, resumen, autor, portada, precio, categoria, bestSeller, edadMinima, calificacion, contenido);
-            biblioteca.put(isbn, l);
-            try {
-                ArrayList resp = new ArrayList();
-                resp.add("El libro con ISBN: " + isbn + " se edito correctamente");
-                objectOutput.writeObject(resp);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            try {
-                ArrayList resp = new ArrayList();
-                resp.add("El libro con ISBN: " + isbn + " No existe o no se pudo editar");
-                objectOutput.writeObject(resp);
-                objectOutput.flush();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        libro.setTitulo((String) msg.get(2));
+        libro.setResumen((String) msg.get(3));
+        libro.setAutor((String) msg.get(4));
+        libro.setImagen((ImageIcon) msg.get(5));
+        libro.setPrecio((double) msg.get(6));
+        libro.setCategoria((String) msg.get(7));
+        libro.setBestSeller((boolean) msg.get(8));
+        libro.setEdadMinima((int) msg.get(9));
+        libro.setCalificacion((int) msg.get(10));
+        resp.add("Se editaron los siguientes atributos del libro:\n"
+                + "Titulo: " + libro.getTitulo()
+                + "Autor: " + libro.getAutor()
+                + "Resumen: " + libro.getResumen()
+                + "Precio: " + libro.getPrecio()
+                + "Categoria: " + libro.getCategoria()
+                + "Best Seller: " + libro.isBestSeller()
+                + "Edad Minima: " + libro.getEdadMinima()
+                + "Calificacion: " + libro.getCalificacion());
+        try {
+            objectOutput.writeObject(resp);
+            objectOutput.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
     }
 
     public void consultarCategoria(String categoria) {
-        /*
-        Romance
-        Suspenso
-        Terror
-        Drama
-        Matematicas
-        Fisica
-        Estadistica
-        Programacion
+        /*  Romance
+            Suspenso
+            Terror
+            Drama
+            Matematicas
+            Fisica
+            Estadistica
+            Programacion
          */
-
-        
+        try {
+            Iterator it = biblioteca.values().iterator();
+            ArrayList libros = new ArrayList();
+            while (it.hasNext()) {
+                Libro libro = (Libro) it.next();
+                if (libro.getCategoria().equals(categoria)) {
+                    libros.add(libro);
+                }
+            }
+            objectOutput.writeObject(libros);
+            objectOutput.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     //-------------------------------------SERIALIZACION DE USUARIOS Y LIBROS--------------------------------------------
     public void guardarBiblioteca() {
         ObjectOutputStream escritor;
@@ -302,29 +349,29 @@ public class Hilo extends Thread {
         }
 
     }
-    
-    public void guardarAdmins(){
+
+    public void guardarAdmins() {
         ObjectOutputStream escritor;
-        try{
+        try {
             escritor = new ObjectOutputStream(new FileOutputStream("administradores.txt", false));
             escritor.writeObject(admins);
             escritor.flush();
             escritor.close();
             System.out.println("Administradores guardados");
-            } catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public void guardarLectores(){
+
+    public void guardarLectores() {
         ObjectOutputStream escritor;
-        try{
+        try {
             escritor = new ObjectOutputStream(new FileOutputStream("lectores.txt", false));
             escritor.writeObject(lectores);
             escritor.flush();
             escritor.close();
             System.out.println("Lectores guardados");
-            } catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -412,12 +459,12 @@ public class Hilo extends Thread {
         }
 
     }
-    
-    public void consultarDatosAdmin(String correo){
+
+    public void consultarDatosAdmin(String correo) {
         ArrayList resp = new ArrayList();
-        if(admins.containsKey(correo)){
+        if (admins.containsKey(correo)) {
             try {
-                Admin admin = (Admin)admins.get(correo);
+                Admin admin = (Admin) admins.get(correo);
                 resp.add(true);
                 resp.add(admin.getNombre());
                 resp.add(admin.getApellidos());
@@ -429,54 +476,54 @@ public class Hilo extends Thread {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             try {
                 resp.add(false);
-                resp.add("No se encontro el administrador con correo "+correo);
+                resp.add("No se encontro el administrador con correo " + correo);
                 objectOutput.writeObject(resp);
                 objectOutput.flush();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            
+
         }
     }
-    
-    public void editarAdmin(ArrayList msg){
+
+    public void editarAdmin(ArrayList msg) {
         try {
-            String correo = (String)msg.get(1);
-            Admin admin = (Admin)admins.get(correo);
-            admin.setNombre((String)msg.get(2));
-            admin.setApellidos((String)msg.get(3));
-            admin.setCargo((String)msg.get(4));
-            admin.setCelular((String)msg.get(5));
-            admin.setAutorizado((boolean)msg.get(6));
+            String correo = (String) msg.get(1);
+            Admin admin = (Admin) admins.get(correo);
+            admin.setNombre((String) msg.get(2));
+            admin.setApellidos((String) msg.get(3));
+            admin.setCargo((String) msg.get(4));
+            admin.setCelular((String) msg.get(5));
+            admin.setAutorizado((boolean) msg.get(6));
             ArrayList resp = new ArrayList();
-            resp.add("Se editaron los datos del admin con correo "+admin.getCorreo()+
-                    ":\nNombre: "+admin.getNombre()+
-                    "\nApellidos: "+admin.getApellidos()+
-                    "\nCargo: " + admin.getCargo()+
-                    "\nCelular: "+admin.getCelular()+
-                    "\nAutorizacion: "+ admin.isAutorizado());
+            resp.add("Se editaron los datos del admin con correo " + admin.getCorreo()
+                    + ":\nNombre: " + admin.getNombre()
+                    + "\nApellidos: " + admin.getApellidos()
+                    + "\nCargo: " + admin.getCargo()
+                    + "\nCelular: " + admin.getCelular()
+                    + "\nAutorizacion: " + admin.isAutorizado());
             objectOutput.writeObject(resp);
             objectOutput.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    
+
     //-------------------------------------------------GESTION DE USUARIOS LECTORES--------------------------------------------------
-    public void agregarLector(Lector lector){
-        if(lectores.containsKey(lector.getCorreo())){
+    public void agregarLector(Lector lector) {
+        if (lectores.containsKey(lector.getCorreo())) {
             try {
                 ArrayList resp = new ArrayList();
-                resp.add("El correo "+lector.getCorreo()+" ya se encuentra registrado");
+                resp.add("El correo " + lector.getCorreo() + " ya se encuentra registrado");
                 objectOutput.writeObject(resp);
                 objectOutput.flush();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             try {
                 lectores.put(lector.getCorreo(), lector);
                 ArrayList resp = new ArrayList();
@@ -486,35 +533,36 @@ public class Hilo extends Thread {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            
+
         }
     }
-    public void eliminarLector(String correo){
-       Object o = lectores.remove(correo);
-       if(o == null){
-           try {
-               ArrayList resp = new ArrayList();
-               resp.add("No se encontro un lector con el correo " + correo);
-               objectOutput.writeObject(resp);
-               objectOutput.flush();
-           } catch (IOException ex) {
-               ex.printStackTrace();
-           }
-       }else{
-           try {
-               ArrayList resp = new ArrayList();
-               resp.add("Se elimino el lector con correo " + correo);
-               objectOutput.writeObject(resp);
-               objectOutput.flush();
-           } catch (IOException ex) {
-               ex.printStackTrace();
-           }
-       }
+
+    public void eliminarLector(String correo) {
+        Object o = lectores.remove(correo);
+        if (o == null) {
+            try {
+                ArrayList resp = new ArrayList();
+                resp.add("No se encontro un lector con el correo " + correo);
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            try {
+                ArrayList resp = new ArrayList();
+                resp.add("Se elimino el lector con correo " + correo);
+                objectOutput.writeObject(resp);
+                objectOutput.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
-    
-    public void consultarLector(String correo){
+
+    public void consultarLector(String correo) {
         Object o = lectores.get(correo);
-        if(o == null){
+        if (o == null) {
             try {
                 ArrayList resp = new ArrayList();
                 resp.add("No se encontro un lector con correo " + correo);
@@ -523,9 +571,9 @@ public class Hilo extends Thread {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             try {
-                Lector lector = (Lector)o;
+                Lector lector = (Lector) o;
                 ArrayList resp = new ArrayList();
                 resp.add(lector.getNombre());
                 resp.add(lector.getApellidos());
@@ -541,21 +589,22 @@ public class Hilo extends Thread {
             }
         }
     }
-    public void consultarDatosLector(String correo){
+
+    public void consultarDatosLector(String correo) {
         Object o = lectores.get(correo);
-        if(o == null){
+        if (o == null) {
             try {
                 ArrayList resp = new ArrayList();
                 resp.add(false);
-                resp.add("No se encontro un lector con correo "+correo);
+                resp.add("No se encontro un lector con correo " + correo);
                 objectOutput.writeObject(resp);
                 objectOutput.flush();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             try {
-                Lector lector = (Lector)o;
+                Lector lector = (Lector) o;
                 ArrayList resp = new ArrayList();
                 resp.add(true);
                 resp.add(lector.getNombre());
@@ -570,23 +619,23 @@ public class Hilo extends Thread {
             }
         }
     }
-    
-    public void editarLector(ArrayList msg){
+
+    public void editarLector(ArrayList msg) {
         try {
-            String correo = (String)msg.get(1);
-            Lector lector = (Lector)lectores.get(correo);
-            lector.setNombre((String)msg.get(2));
-            lector.setApellidos((String)msg.get(3));
-            lector.setCelular((String)msg.get(4));
-            lector.setFechaNacimiento((String)msg.get(5));
-            lector.setEdad((int)msg.get(6));
+            String correo = (String) msg.get(1);
+            Lector lector = (Lector) lectores.get(correo);
+            lector.setNombre((String) msg.get(2));
+            lector.setApellidos((String) msg.get(3));
+            lector.setCelular((String) msg.get(4));
+            lector.setFechaNacimiento((String) msg.get(5));
+            lector.setEdad((int) msg.get(6));
             ArrayList resp = new ArrayList();
-            resp.add("Se editaron los datos del lector con correo " + correo +
-                    "\nNombre: " + lector.getNombre()+
-                    "\nApellidos: "+ lector.getApellidos()+
-                    "\nCelular: "+ lector.getCelular()+
-                    "\nFecha de nacimiento: "+ lector.getFechaNacimiento()+
-                    "\nEdad: " + lector.getEdad());
+            resp.add("Se editaron los datos del lector con correo " + correo
+                    + "\nNombre: " + lector.getNombre()
+                    + "\nApellidos: " + lector.getApellidos()
+                    + "\nCelular: " + lector.getCelular()
+                    + "\nFecha de nacimiento: " + lector.getFechaNacimiento()
+                    + "\nEdad: " + lector.getEdad());
             objectOutput.writeObject(resp);
             objectOutput.flush();
         } catch (IOException ex) {

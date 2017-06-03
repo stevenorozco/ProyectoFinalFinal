@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class InternalAddBook extends javax.swing.JInternalFrame {
     Controlador cc;
     private int numeroPaginas;
-    private String contenido;
+    private ArrayList contenido;
     private ImageIcon portada;
             
     /**
@@ -236,7 +236,7 @@ public class InternalAddBook extends javax.swing.JInternalFrame {
         String path = fileChooser.getSelectedFile().getAbsolutePath();
         ArrayList texto = cc.seleccionarTexto(path);
         numeroPaginas = (int)texto.get(1);
-        contenido = (String)texto.get(0);
+        contenido = cc.seleccionarTexto(path);
         
     }//GEN-LAST:event_buttonContenidoActionPerformed
 

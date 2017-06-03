@@ -26,11 +26,10 @@ public class Libro implements Serializable{
     private boolean bestSeller;
     private int edadMinima;
     private int calificacion;
-    private String contenido; 
+    private ArrayList contenido; 
 
-    public Libro(String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen, double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, String contenido) {
+    public Libro(String isbn, int numeroPaginas, String titulo, String resumen, String autor, ImageIcon imagen, double precio, String categoria, boolean bestSeller, int edadMinima, int calificacion, ArrayList contenido) {
         this.isbn = isbn;
-        this.numeroPaginas = numeroPaginas;
         this.titulo = titulo;
         this.resumen = resumen;
         this.autor = autor;
@@ -41,6 +40,7 @@ public class Libro implements Serializable{
         this.edadMinima = edadMinima;
         this.calificacion = calificacion;
         this.contenido = contenido;
+        this.numeroPaginas = contenido.size();
     }
     //-------METODOS GET---------
     public String getIsbn() {
@@ -87,7 +87,7 @@ public class Libro implements Serializable{
         return calificacion;
     }
 
-    public String getContenido() {
+    public ArrayList getContenido() {
         return contenido;
     }
     
@@ -136,7 +136,7 @@ public class Libro implements Serializable{
         this.calificacion = calificacion;
     }
 
-    public void setContenido(String contenido) {
+    public void setContenido(ArrayList contenido) {
         this.contenido = contenido;
     }
 }

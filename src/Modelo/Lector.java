@@ -20,7 +20,7 @@ public class Lector implements Serializable {
     private String fechaNacimiento;
     private String correo;
     private String password;
-    private String preferencia;
+    private ArrayList preferencias;
     private int edad;
     private double saldo;
     private ArrayList consecutivo;
@@ -30,14 +30,14 @@ public class Lector implements Serializable {
     private ArrayList misLibros;
     private int librosLeidos;
 
-    public Lector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, String preferencia, int edad, double saldo, int librosLeidos) {
+    public Lector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, ArrayList preferencias, int edad, double saldo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.celular = celular;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.password = password;
-        this.preferencia = preferencia;
+        this.preferencias = preferencias;
         this.edad = edad;
         this.saldo = saldo;
         this.librosLeidos = librosLeidos;
@@ -46,6 +46,7 @@ public class Lector implements Serializable {
         horaRecarga = new ArrayList();
         valorRecarga = new ArrayList();
         misLibros = new ArrayList();
+
     }
 
     public String getNombre() {
@@ -96,12 +97,12 @@ public class Lector implements Serializable {
         this.password = password;
     }
 
-    public String getPreferencia() {
-        return preferencia;
+    public ArrayList getPreferencia() {
+        return preferencias;
     }
 
-    public void setPreferencia(String preferencia) {
-        this.preferencia = preferencia;
+    public void setPreferencia(ArrayList preferencias) {
+        this.preferencias = preferencias;
     }
 
     public int getEdad() {
@@ -167,8 +168,17 @@ public class Lector implements Serializable {
     public void setLibrosLeidos(int librosLeidos) {
         this.librosLeidos = librosLeidos;
     }
-    
-    public void recargarSaldo(double recarga){
-        this.saldo+=recarga;
+
+    public void recargarSaldo(double recarga) {
+        this.saldo += recarga;
+    }
+
+    public String restarSaldo(double restaSaldo) {
+        if (saldo < restaSaldo) {
+            return "Saldo insuficiente\nFaltan $" + (restaSaldo - saldo) + " pesos";
+        } else {
+            saldo -= restaSaldo;
+            return "saldo actual: $" + saldo + "pesos";
+        }
     }
 }

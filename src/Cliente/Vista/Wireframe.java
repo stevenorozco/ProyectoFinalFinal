@@ -4,21 +4,67 @@
  * and open the template in the editor.
  */
 package Cliente.Vista;
+
 import Cliente.Controlador.Controlador;
+import java.util.ArrayList;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+
 /**
  *
  * @author Luis
  */
 public class Wireframe extends javax.swing.JFrame {
+
     private Controlador c;
+    private String nombreLector;
+    private String apellidosLector;
+    private String correoLector;
+
     /**
      * Creates new form Wireframe
+     *
      * @param c
      */
     public Wireframe() {
         c = new Controlador();
         c.ejecutarCliente();
         initComponents();
+        //------------------------------CREACION DE LA VENTANA LOGIN----------------------------------------------
+        //Creacion de componentes del login
+        JTextField correo = new JTextField();
+        JPasswordField password = new JPasswordField();
+        JComponent[] entradas = {
+            new JLabel("Correo"),
+            correo,
+            new JLabel("Contraseña"),
+            password
+        };//Finaliza la creacion de la ventana login
+        ArrayList resp = null;
+        //Llamado y visualizacion de la ventana login
+        do {
+            int resultado = JOptionPane.showConfirmDialog(this, entradas, "LOGIN", JOptionPane.OK_CANCEL_OPTION);
+            if (resultado == JOptionPane.CLOSED_OPTION || resultado == JOptionPane.CANCEL_OPTION) {
+                System.exit(0);
+            }
+            if (resultado == JOptionPane.OK_OPTION) {
+                String usuario = correo.getText();
+                String pass = new String(password.getPassword());
+                resp = c.iniciarSesionLector(usuario, pass);
+                if ((boolean) resp.get(0).equals(false)) {
+                    JOptionPane.showMessageDialog(this, resp.get(1), "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    correoLector = (String) resp.get(1);
+                    nombreLector = (String) resp.get(2);
+                    apellidosLector = (String) resp.get(3);
+                }
+            }
+        } while ((boolean) resp.get(0) == false);
+
+        JOptionPane.showMessageDialog(this, "Bienvenido " + nombreLector + " " + apellidosLector, "BIENVENIDO", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -35,6 +81,10 @@ public class Wireframe extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         buttonComprarLibros = new javax.swing.JButton();
+        buttonBuscarCategoria = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -56,8 +106,8 @@ public class Wireframe extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        buttonComprarLibros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/buyBooksButton.png"))); // NOI18N
-        buttonComprarLibros.setText("Comprar ");
+        buttonComprarLibros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/findShopBooks.png"))); // NOI18N
+        buttonComprarLibros.setText("Buscar");
         buttonComprarLibros.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonComprarLibros.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         buttonComprarLibros.addActionListener(new java.awt.event.ActionListener() {
@@ -66,15 +116,61 @@ public class Wireframe extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 22;
-        gridBagConstraints.ipady = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 141, 0, 146);
+        gridBagConstraints.insets = new java.awt.Insets(0, 12, 4, 268);
         jPanel2.add(buttonComprarLibros, gridBagConstraints);
 
+        buttonBuscarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/buyBooksButton.png"))); // NOI18N
+        buttonBuscarCategoria.setText("Comprar");
+        buttonBuscarCategoria.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonBuscarCategoria.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonBuscarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBuscarCategoriaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 251, 4, 0);
+        jPanel2.add(buttonBuscarCategoria, gridBagConstraints);
+
         jTabbedPane1.addTab("Tienda", jPanel2);
+
+        jButton1.setText("Recargar");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jButton2.setText("Mi saldo");
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(257, 257, 257)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(262, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Saldo", jPanel3);
 
         javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
         desktopPane.setLayout(desktopPaneLayout);
@@ -118,10 +214,14 @@ public class Wireframe extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonComprarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonComprarLibrosActionPerformed
-        InternalBuyBooks buy = new InternalBuyBooks(c);
+        InternalFindShopBooks buy = new InternalFindShopBooks(c);
         this.desktopPane.add(buy);
         buy.setVisible(true);
     }//GEN-LAST:event_buttonComprarLibrosActionPerformed
+
+    private void buttonBuscarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonBuscarCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,12 +259,16 @@ public class Wireframe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonBuscarCategoria;
     private javax.swing.JButton buttonComprarLibros;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
