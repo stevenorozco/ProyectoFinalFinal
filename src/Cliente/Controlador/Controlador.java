@@ -125,7 +125,7 @@ public class Controlador {
 
     //-------------------------------------GESTION DE LECTORES-------------------------------------------------------------------
     
-    public String agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, ArrayList preferencia, int edad, double saldo){
+    public String agregarLector(String nombre, String apellidos, String celular, String fechaNacimiento, String correo, String password, String preferencia, int edad, double saldo){
         return (String)cliente.agregarLector(nombre, apellidos, celular, fechaNacimiento, correo, password, preferencia, edad, saldo).get(0);
     }
     
